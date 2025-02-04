@@ -1,4 +1,4 @@
-import aws_cdk.assertions as assertions
+from aws_cdk.assertions import Template
 from aws_cdk import App
 from app.api.api_stack import ApiStack
 from app.api.config_models import AppConfig
@@ -14,6 +14,8 @@ def test_sqs_queue_created():
         throttling_rate_limit=5
     )
     stack = ApiStack(app, "api", config=test_config)
-    template = assertions.Template.from_stack(stack)
+    template = Template.from_stack(stack)
 
-    assert "AWS::SQS::Queue" in template["Resources"]
+    # Use the find_resources helper:
+    sqs_resources = template.find_resources("AWS::SQS::Queue")
+    assert len(sqs_resources) > 0
