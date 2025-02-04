@@ -19,9 +19,9 @@ from aws_cdk import (
 # Change import to point to app.api.config_models
 from app.api.config_models import AppConfig
 
-class FactoryApiStack(Stack):
+class ApiStack(Stack):
     """
-    FactoryApiStack builds the AWS infrastructure for the reusable API.
+    ApiStack builds the AWS infrastructure for the reusable API.
     """
     def __init__(self, scope: Construct, construct_id: str, config: AppConfig, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
