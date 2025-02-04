@@ -157,10 +157,8 @@ class ApiStack(Stack):
         )
 
         self._api.root.add_cors_preflight(
-            apigw.CorsOptions(
-                allow_origins=apigw.Cors.ALL_ORIGINS,
-                allow_methods=apigw.Cors.ALL_METHODS
-            )
+            allow_origins=apigw.Cors.ALL_ORIGINS,
+            allow_methods=apigw.Cors.ALL_METHODS
         )
 
         self._queue = sqs.Queue(
