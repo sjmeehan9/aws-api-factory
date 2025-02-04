@@ -130,9 +130,9 @@ class ApiStack(Stack):
                 cognito_user_pools=[self._user_pool]
             ),
             method_responses=[
-                apigw.MethodResponse(status_code=200),
-                apigw.MethodResponse(status_code=400),
-                apigw.MethodResponse(status_code=500)
+                apigw.MethodResponse(status_code="200"),
+                apigw.MethodResponse(status_code="400"),
+                apigw.MethodResponse(status_code="500")
             ]
         )
 
