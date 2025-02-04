@@ -49,10 +49,10 @@ class ApiStack(Stack):
             "SNSEndpoint",
             service=ec2.InterfaceVpcEndpointAwsService.SNS
         )
-        self._vpc.add_interface_endpoint(
-            "LambdaEndpoint",
-            service=ec2.InterfaceVpcEndpointAwsService.LAMBDA
-        )
+        # self._vpc.add_interface_endpoint(
+        #     "LambdaEndpoint",
+        #     service=ec2.InterfaceVpcEndpointAwsService.LAMBDA
+        # )
 
         self._user_pool = cognito.UserPool(
             self,
@@ -124,7 +124,7 @@ class ApiStack(Stack):
             integration,
             request_validator=request_validator,
             authorization_type=apigw.AuthorizationType.COGNITO,
-            authorizer=apigw.CognitoAuthorizer(
+            authorizer=apigw.CognitoUserPoolsAuthorizer(
                 self,
                 "CognitoAuthorizer",
                 cognito_user_pools=[self._user_pool]
