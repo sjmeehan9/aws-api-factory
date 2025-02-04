@@ -1,5 +1,9 @@
-# Custom
+# DS Store files
 .DS_Store
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
