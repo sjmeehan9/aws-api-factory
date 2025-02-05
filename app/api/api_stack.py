@@ -49,10 +49,6 @@ class ApiStack(Stack):
             "SNSEndpoint",
             service=ec2.InterfaceVpcEndpointAwsService.SNS
         )
-        # self._vpc.add_interface_endpoint(
-        #     "LambdaEndpoint",
-        #     service=ec2.InterfaceVpcEndpointAwsService.LAMBDA
-        # )
 
         self._user_pool = cognito.UserPool(
             self,
@@ -73,6 +69,9 @@ class ApiStack(Stack):
         )
         self._lambda_role.add_managed_policy(
             iam.ManagedPolicy.from_aws_managed_policy_name("service-role/AWSLambdaBasicExecutionRole")
+        )
+        self._lambda_role.add_managed_policy(
+            iam.ManagedPolicy.from_aws_managed_policy_name("service-role/AWSLambdaVPCAccessExecutionRole")
         )
         self._lambda_role.add_to_policy(
             iam.PolicyStatement(
