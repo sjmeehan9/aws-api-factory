@@ -22,6 +22,9 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Install AWS CDK CLI
+        run: npm install -g aws-cdk
+
       - name: Destroy stack
         run: |
           source .venv/bin/activate
