@@ -48,10 +48,10 @@ def service_factory(service_type: str):
     """
     if service_type == "sqs":
         return SqsService()
-    if service_type == "sns":
-        return SnsService()
-    if service_type == "eventbridge":
-        return EventBridgeService()
+    # if service_type == "sns":
+    #     return SnsService()
+    # if service_type == "eventbridge":
+    #     return EventBridgeService()
     return DefaultService()
 
 class BaseService:

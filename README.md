@@ -77,6 +77,27 @@ aws cognito-idp admin-create-user \
 ```
 
 
+### Cognito JWT User Token
+```
+aws cognito-idp initiate-auth \
+  --auth-flow USER_PASSWORD_AUTH \
+  --client-id <YOUR_USER_POOL_CLIENT_ID> \
+  --auth-parameters USERNAME=<YOUR_USERNAME>,PASSWORD=<YOUR_PASSWORD>
+```
+
+
+### Cognito Respond to Password Challenge
+```
+aws cognito-idp respond-to-auth-challenge \
+  --client-id <YOUR_APP_CLIENT_ID> \
+  --challenge-name NEW_PASSWORD_REQUIRED \
+  --session <SESSION_STRING> \
+  --challenge-responses "NEW_PASSWORD=<NEW_PASSWORD>,USERNAME=<USERNAME>" \
+  --query 'AuthenticationResult.IdToken' \
+  --output text
+```
+
+
 ## Useful commands
 
  * `cdk ls`          list all stacks in the app
