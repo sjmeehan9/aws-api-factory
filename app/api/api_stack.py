@@ -72,6 +72,29 @@ class ApiStack(Stack):
             )
         )
 
+        self._queue = sqs.Queue(
+            self,
+            "FactoryQueue"
+        )
+
+        self._sns_topic = sns.Topic(
+            self,
+            "FactoryTopic"
+        )
+
+        self._event_bus = events.EventBus(
+            self,
+            "FactoryEventBus"
+        )
+
+        events.Rule(
+            self,
+            "FactoryEventRule",
+            event_bus=self._event_bus,
+            event_pattern=events.EventPattern(source=["factory.service"])
+            # targets=[targets.LambdaFunction(self._lambda_function)]
+        )
+
         self._lambda_role = iam.Role(
             self,
             "LambdaRole",
@@ -174,29 +197,6 @@ class ApiStack(Stack):
         self._api.root.add_cors_preflight(
             allow_origins=apigw.Cors.ALL_ORIGINS,
             allow_methods=apigw.Cors.ALL_METHODS
-        )
-
-        self._queue = sqs.Queue(
-            self,
-            "FactoryQueue"
-        )
-
-        self._sns_topic = sns.Topic(
-            self,
-            "FactoryTopic"
-        )
-
-        self._event_bus = events.EventBus(
-            self,
-            "FactoryEventBus"
-        )
-
-        events.Rule(
-            self,
-            "FactoryEventRule",
-            event_bus=self._event_bus,
-            event_pattern=events.EventPattern(source=["factory.service"]),
-            targets=[targets.LambdaFunction(self._lambda_function)]
         )
 
     @property
