@@ -1,7 +1,40 @@
 
 # Account Wide Settings to Configure
 
-## Configure a CloudWatch Logs IAM Role for API Gateway
+## Basics for New AWS Account
+ * Create AWS account
+ * Enable Multi-Factor Authentication (MFA) on the Root Account
+ * Set up Budget & Cost Management alerts
+ * Create IAM user and group with AdministratorAccess managed policy on AdminGroup
+ * Enable MFA for the admin IAM user
+ * Set Up AWS CloudTrail
+
+
+## AWS API Settings
+
+### Creating Keys
+ * IAM -> Users -> User -> Access keys -> Create access key
+
+##### OR
+`aws iam create-access-key --user-name <YourIAMUserName>`
+
+##### THEN - add the credentials for local use
+`aws configure`
+
+
+### Add AWS Credentials to GitHub Repository Secrets
+ * Settings -> Secrets and variables -> Actions
+
+
+### Install CDK (Must have Node installed)
+`npm install -g aws-cdk`
+
+
+### Bootstrap AWS environment for AWS CDK
+`cdk bootstrap aws://ACCOUNT_ID/REGION`
+
+
+### Configure a CloudWatch Logs IAM Role for API Gateway
 
 1. Create or Identify an IAM Role
 ```
@@ -21,7 +54,6 @@ aws iam create-role \
   }'
 ```
 
-
 2. Attach the Role Policy
 ```
 aws iam attach-role-policy \
@@ -29,12 +61,21 @@ aws iam attach-role-policy \
   --policy-arn arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs
 ```
 
-
 3. Update the Account Settings for API Gateway
 ```
 aws apigateway update-account \
   --patch-operations op=replace,path=/cloudwatchRoleArn,value=arn:aws:iam::<ACCOUNT_ID>:role/APIGatewayCloudWatchLogsRole
 ```
+
+
+### Add Users to Cognito
+```
+aws cognito-idp admin-create-user \
+  --user-pool-id <USER_POOL_ID> \
+  --username newuser@example.com \
+  --temporary-password MyTempPass123
+```
+
 
 ## Useful commands
 
