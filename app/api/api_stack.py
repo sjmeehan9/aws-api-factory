@@ -68,7 +68,6 @@ class ApiStack(Stack):
             auth_flows=cognito.AuthFlow(
                 user_password=True,    # ALLOW_USER_PASSWORD_AUTH
                 user_srp=True,         # ALLOW_USER_SRP_AUTH
-                refresh_token=True,    # ALLOW_REFRESH_TOKEN_AUTH
                 admin_user_password=True  # ALLOW_ADMIN_USER_PASSWORD_AUTH
             )
         )
