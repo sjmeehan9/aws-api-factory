@@ -74,7 +74,8 @@ class ApiStack(Stack):
 
         self._queue = sqs.Queue(
             self,
-            "FactoryQueue"
+            "FactoryQueue",
+            queue_name="FactoryQueue"
         )
 
         self._sns_topic = sns.Topic(
