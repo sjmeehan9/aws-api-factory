@@ -1,6 +1,7 @@
 from constructs import Construct
 from aws_cdk import (
     Stack,
+    RemovalPolicy,
     aws_ec2 as ec2,
     aws_iam as iam,
     aws_kms as kms,
@@ -34,6 +35,8 @@ class ApiStack(Stack):
             enable_key_rotation=True
         )
 
+        self._kms_key.apply_removal_policy(RemovalPolicy.DESTROY)
+
         self._vpc = ec2.Vpc(
             self,
             "Vpc",
@@ -56,10 +59,18 @@ class ApiStack(Stack):
             user_pool_name=f"{self._config.api_name}-userpool"
         )
 
+        self._user_pool.apply_removal_policy(RemovalPolicy.DESTROY)
+
         self._user_pool_client = cognito.UserPoolClient(
             self,
             "UserPoolClient",
-            user_pool=self._user_pool
+            user_pool=self._user_pool,
+            auth_flows=cognito.AuthFlow(
+                user_password=True,    # ALLOW_USER_PASSWORD_AUTH
+                user_srp=True,         # ALLOW_USER_SRP_AUTH
+                refresh_token=True,    # ALLOW_REFRESH_TOKEN_AUTH
+                admin_user_password=True  # ALLOW_ADMIN_USER_PASSWORD_AUTH
+            )
         )
 
         self._lambda_role = iam.Role(
@@ -77,6 +88,12 @@ class ApiStack(Stack):
             iam.PolicyStatement(
                 actions=["kms:Encrypt","kms:Decrypt","kms:GenerateDataKey","kms:DescribeKey"],
                 resources=[self._kms_key.key_arn]
+            )
+        )
+        self._lambda_role.add_to_policy(
+            iam.PolicyStatement(
+                actions=["sqs:SendMessage"],
+                resources=[self._queue.queue_arn]
             )
         )
 
@@ -173,10 +190,6 @@ class ApiStack(Stack):
         self._event_bus = events.EventBus(
             self,
             "FactoryEventBus"
-        )
-
-        self._lambda_function.add_event_source(
-            lambda_event_sources.SqsEventSource(self._queue)
         )
 
         events.Rule(
