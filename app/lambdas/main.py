@@ -3,6 +3,7 @@ import logging
 from typing import Any, Dict
 from dataclasses import dataclass
 import boto3
+import os
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -69,8 +70,9 @@ class SqsService(BaseService):
     SqsService handles messages via SQS.
     """
     def __init__(self) -> None:
+        self.queue_url = os.environ["QUEUE_URL"]
         self._sqs = boto3.resource("sqs")
-        self._queue = self._sqs.get_queue_by_name(QueueName="FactoryQueue")
+        self._queue = self._sqs.Queue(self.queue_url)
 
     def process(self, message: str) -> str:
         response = self._queue.send_message(MessageBody=message)

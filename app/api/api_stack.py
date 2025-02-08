@@ -115,7 +115,11 @@ class ApiStack(Stack):
         )
         self._lambda_role.add_to_policy(
             iam.PolicyStatement(
-                actions=["sqs:SendMessage"],
+                actions=[
+                    "sqs:SendMessage",
+                    "sqs:GetQueueUrl",
+                    "sqs:GetQueueAttributes"
+                ],
                 resources=[self._queue.queue_arn]
             )
         )
@@ -132,7 +136,8 @@ class ApiStack(Stack):
             environment={
                 "KMS_KEY_ARN": self._kms_key.key_arn,
                 "USER_POOL_ID": self._user_pool.user_pool_id,
-                "USER_POOL_CLIENT_ID": self._user_pool_client.user_pool_client_id
+                "USER_POOL_CLIENT_ID": self._user_pool_client.user_pool_client_id,
+                "QUEUE_URL": self._queue.queue_url
             }
         )
 
