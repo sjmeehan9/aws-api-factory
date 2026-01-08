@@ -1,0 +1,9 @@
+# AWS API Factory - Invalid Configuration: Bad Profile Value
+# Used for testing validation of invalid enum values
+
+project:
+  name: my-api
+  envs:
+    - dev
+
+profile: production  # Invalid - should be 'minimal' or 'scalable'

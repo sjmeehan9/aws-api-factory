@@ -1,0 +1,27 @@
+# AWS API Factory - Invalid Configuration: Cognito Auth Without Config
+# Used for testing validation of auth configuration requirements
+
+project:
+  name: my-api
+  envs:
+    - dev
+
+profile: minimal
+
+apis:
+  rest:
+    enabled: true
+    routes:
+      - path: /hello
+        methods:
+          - GET
+        service: hello
+        auth: cognito  # Uses cognito but no cognito config provided
+    # Missing cognito configuration block
+
+compute:
+  lambda:
+    enabled: true
+    services:
+      hello:
+        entry: src/services/hello/handler.py:handler

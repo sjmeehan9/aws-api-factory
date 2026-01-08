@@ -1,0 +1,14 @@
+# AWS API Factory - Invalid Configuration: Missing Required Fields
+# Used for testing validation of missing required fields
+
+# Missing 'project' section entirely
+profile: minimal
+
+apis:
+  rest:
+    enabled: true
+    routes:
+      - path: /hello
+        methods:
+          - GET
+        service: hello

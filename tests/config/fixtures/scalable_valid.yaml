@@ -1,0 +1,138 @@
+# AWS API Factory - Scalable Valid Configuration Fixture
+# Used for testing valid scalable (production) configuration
+
+project:
+  name: production-api
+  envs:
+    - dev
+    - staging
+    - prod
+
+profile: scalable
+
+apis:
+  rest:
+    enabled: true
+    throttle_rate: 1000
+    throttle_burst: 2000
+    routes:
+      - path: /orders
+        methods:
+          - GET
+          - POST
+        service: orders
+        auth: cognito
+      - path: /orders/{id}
+        methods:
+          - GET
+          - PUT
+          - DELETE
+        service: orders
+        auth: cognito
+      - path: /health
+        methods:
+          - GET
+        service: health
+        auth: none
+      - path: /public/products
+        methods:
+          - GET
+        service: products
+        auth: api_key
+    cognito:
+      create_user_pool: true
+
+  graphql:
+    enabled: true
+    schema_path: src/graphql/schema.graphql
+    auth: cognito
+    resolvers:
+      - type: Query
+        field: getOrder
+        service: orders
+        resolver: get_order
+      - type: Query
+        field: listOrders
+        service: orders
+        resolver: list_orders
+      - type: Mutation
+        field: createOrder
+        service: orders
+        resolver: create_order
+    cognito:
+      create_user_pool: true
+
+compute:
+  lambda:
+    enabled: true
+    services:
+      orders:
+        entry: src/services/orders/handler.py:handler
+        memory_mb: 1024
+        timeout_s: 30
+        reserved_concurrency: 10
+        environment:
+          LOG_LEVEL: INFO
+          ORDERS_TABLE: orders
+      health:
+        entry: src/services/health/handler.py:handler
+        memory_mb: 256
+        timeout_s: 5
+      products:
+        entry: src/services/products/handler.py:handler
+        memory_mb: 512
+        timeout_s: 15
+
+  apprunner:
+    enabled: true
+    services:
+      web-api:
+        dockerfile: src/services/web-api/Dockerfile
+        port: 8000
+        healthcheck_path: /healthz
+        cpu: 2
+        memory: 4
+        min_instances: 2
+        max_instances: 20
+        environment:
+          NODE_ENV: production
+
+data:
+  dynamodb:
+    enabled: true
+    tables:
+      - name: orders
+        pk: order_id
+        sk: created_at
+        billing_mode: PAY_PER_REQUEST
+        pitr: true
+      - name: products
+        pk: product_id
+        billing_mode: PAY_PER_REQUEST
+        pitr: true
+
+  aurora:
+    enabled: true
+    engine: postgres
+    mode: serverless_v2
+    min_acu: 0.5
+    max_acu: 16
+    database_name: appdb
+
+  s3:
+    enabled: true
+    buckets:
+      - name: uploads
+        versioning: true
+        encryption: true
+      - name: assets
+        versioning: false
+        encryption: true
+
+secrets:
+  provider: secrets_manager
+
+observability:
+  level: enhanced
+  tracing: true
+  alarms: true

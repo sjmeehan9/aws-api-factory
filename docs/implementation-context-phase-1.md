@@ -75,9 +75,75 @@ python -m build
 
 **Dev:** `pytest>=7.0`, `black>=23.0`, `bandit>=1.7`, `pre-commit>=3.0`, `detect-secrets>=1.4`
 
+---
+
+## Component 1.2: Configuration System (Pydantic Models & YAML Schema)
+
+**Status:** ✅ Complete
+
+**Implementation Date:** January 8, 2026
+
+---
+
+### Overview
+
+Implemented comprehensive configuration system using Pydantic v2 models for `factory.yaml` validation. Features include profile-based defaults (minimal/scalable), environment-specific config merging, cross-section validation, JSON Schema export for IDE autocomplete, and actionable error messages with file/line context.
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `src/aws_api_factory/config/models.py` | Pydantic v2 models for all config sections (~1100 lines) |
+| `src/aws_api_factory/config/loader.py` | YAML loading with env merging and error formatting |
+| `src/aws_api_factory/config/validators.py` | Cross-cutting validation (files, services, secrets) |
+| `src/aws_api_factory/config/schema.py` | JSON Schema export for IDE support |
+| `tests/config/test_loader.py` | Loader unit tests |
+| `tests/config/test_schema.py` | Schema export tests |
+| `tests/config/test_validators.py` | Validator tests |
+| `tests/config/fixtures/*.yaml` | 10 test fixtures (valid/invalid configs) |
+
+### Key Models
+
+| Model | Purpose |
+|-------|---------|
+| `FactoryConfig` | Root config with profile-based defaults |
+| `ApisConfig` | REST + GraphQL API definitions |
+| `ComputeConfig` | Lambda + App Runner service configs |
+| `DataConfig` | DynamoDB, Aurora, S3 configurations |
+| `SecretsConfig` | Secrets Manager with Cognito/SSM support |
+| `ObservabilityConfig` | Logging, tracing, metrics settings |
+
+### Key Functions
+
+| Function | Purpose |
+|----------|---------|
+| `load_config(path)` | Load and validate YAML with env merge |
+| `validate_config(config)` | Cross-section validation |
+| `export_json_schema(path)` | Generate schema for IDE |
+| `get_config_template(profile)` | Generate starter config |
+
+### Test Coverage
+
+- **170 tests** passing (added 125 tests for this component)
+- **93.04% coverage** (exceeds 85% threshold)
+- **Config load time:** ~3.6ms (well under 100ms target)
+
+### Verification Commands
+
+```bash
+# Run config tests
+pytest tests/config/ -v
+
+# Load and validate config
+python -c "from aws_api_factory.config import load_config; print(load_config('starter/factory.yaml').project.name)"
+
+# Export JSON Schema
+python -c "from aws_api_factory.config import export_json_schema; export_json_schema('factory-schema.json')"
+```
+
 ### Next Component
 
-**Component 1.2:** Configuration System (Pydantic Models & YAML Schema)
-- Implement Pydantic v2 models for all config sections
-- YAML loading and validation with clear error messages
-- JSON Schema export for IDE support
+**Component 1.3:** CLI Foundation (Click + Rich)
+- Implement init, validate, synth, deploy, destroy commands
+- Rich console output with progress indicators
+- Config validation integration

@@ -1,0 +1,11 @@
+# AWS API Factory - Invalid Configuration: Unknown Fields
+# Used for testing validation of extra fields (typos, wrong names)
+
+project:
+  name: my-api
+  envs:
+    - dev
+  unknown_field: value  # Extra field - not allowed
+
+profile: minimal
+deployment_mode: fast  # Unknown top-level field

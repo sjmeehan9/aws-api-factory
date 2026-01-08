@@ -1,0 +1,14 @@
+# AWS API Factory - Environment Override: Production
+# Used for testing environment-specific config merging
+
+# This file is merged with factory.yaml when env=prod
+
+profile: scalable  # Override to scalable for production
+
+observability:
+  level: enhanced
+  tracing: true
+  alarms: true
+
+secrets:
+  provider: secrets_manager  # Use Secrets Manager in production
