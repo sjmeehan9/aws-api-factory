@@ -94,7 +94,7 @@ class TestPackagingConfiguration:
         project = config["project"]
         assert project["name"] == "aws-api-factory"
         assert "version" in project
-        assert project["requires-python"] == ">=3.9"
+        assert project["requires-python"] == ">=3.12"
 
     def test_pyproject_dependencies(self, project_root: Path) -> None:
         """Test that pyproject.toml has required dependencies."""

@@ -1,0 +1,101 @@
+Run pytest --cov-fail-under=85
+============================= test session starts ==============================
+platform linux -- Python 3.10.19, pytest-9.0.2, pluggy-1.6.0 -- /opt/hostedtoolcache/Python/3.10.19/x64/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/aws-api-factory/aws-api-factory
+configfile: pyproject.toml
+testpaths: tests
+plugins: cov-7.0.0, typeguard-2.13.3, mock-3.15.1
+collecting ... collected 46 items
+
+tests/cli/test_commands.py::TestCLIMain::test_cli_version PASSED         [  2%]
+tests/cli/test_commands.py::TestCLIMain::test_cli_help PASSED            [  4%]
+tests/cli/test_commands.py::TestCLIMain::test_cli_verbose_flag PASSED    [  6%]
+tests/cli/test_commands.py::TestInitCommand::test_init_help PASSED       [  8%]
+tests/cli/test_commands.py::TestInitCommand::test_init_with_project_name PASSED [ 10%]
+tests/cli/test_commands.py::TestInitCommand::test_init_with_template_option PASSED [ 13%]
+tests/cli/test_commands.py::TestValidateCommand::test_validate_help PASSED [ 15%]
+tests/cli/test_commands.py::TestSynthCommand::test_synth_help PASSED     [ 17%]
+tests/cli/test_commands.py::TestDeployCommand::test_deploy_help PASSED   [ 19%]
+tests/cli/test_commands.py::TestDeployCommand::test_deploy_requires_environment PASSED [ 21%]
+tests/cli/test_commands.py::TestDestroyCommand::test_destroy_help PASSED [ 23%]
+tests/cli/test_commands.py::TestDestroyCommand::test_destroy_requires_environment PASSED [ 26%]
+tests/cli/test_commands_extended.py::TestCLICommands::test_init_default_no_project PASSED [ 28%]
+tests/cli/test_commands_extended.py::TestCLICommands::test_validate_with_show_defaults PASSED [ 30%]
+tests/cli/test_commands_extended.py::TestCLICommands::test_synth_custom_output PASSED [ 32%]
+tests/cli/test_commands_extended.py::TestCLICommands::test_deploy_with_dry_run PASSED [ 34%]
+tests/cli/test_commands_extended.py::TestCLICommands::test_deploy_with_approval_option PASSED [ 36%]
+tests/cli/test_commands_extended.py::TestCLICommands::test_destroy_with_force PASSED [ 39%]
+tests/cli/test_commands_extended.py::TestCLICommands::test_destroy_confirmation_abort PASSED [ 41%]
+tests/cli/test_commands_extended.py::TestCLIModuleImports::test_main_callable PASSED [ 43%]
+tests/cli/test_commands_extended.py::TestCLIModuleImports::test_commands_registered PASSED [ 45%]
+tests/config/test_models.py::TestConfigPlaceholder::test_config_module_exists SKIPPED [ 47%]
+tests/test_package.py::TestPackageInit::test_version_defined PASSED      [ 50%]
+tests/test_package.py::TestPackageInit::test_author_defined PASSED       [ 52%]
+tests/test_package.py::TestPackageInit::test_license_defined PASSED      [ 54%]
+tests/test_package.py::TestPackageInit::test_all_exports PASSED          [ 56%]
+tests/test_project_structure.py::TestProjectStructure::test_src_directory_exists PASSED [ 58%]
+tests/test_project_structure.py::TestProjectStructure::test_library_package_exists PASSED [ 60%]
+tests/test_project_structure.py::TestProjectStructure::test_cli_module_exists PASSED [ 63%]
+tests/test_project_structure.py::TestProjectStructure::test_config_module_exists PASSED [ 65%]
+tests/test_project_structure.py::TestProjectStructure::test_constructs_module_exists PASSED [ 67%]
+tests/test_project_structure.py::TestProjectStructure::test_templates_module_exists PASSED [ 69%]
+tests/test_project_structure.py::TestProjectStructure::test_utils_module_exists PASSED [ 71%]
+tests/test_project_structure.py::TestProjectStructure::test_starter_template_exists PASSED [ 73%]
+tests/test_project_structure.py::TestProjectStructure::test_starter_has_hello_service PASSED [ 76%]
+tests/test_project_structure.py::TestPackagingConfiguration::test_pyproject_toml_exists PASSED [ 78%]
+tests/test_project_structure.py::TestPackagingConfiguration::test_pyproject_has_required_sections FAILED [ 80%]
+tests/test_project_structure.py::TestPackagingConfiguration::test_pyproject_project_metadata FAILED [ 82%]
+tests/test_project_structure.py::TestPackagingConfiguration::test_pyproject_dependencies FAILED [ 84%]
+tests/test_project_structure.py::TestPackagingConfiguration::test_pyproject_dev_dependencies FAILED [ 86%]
+tests/test_project_structure.py::TestPackagingConfiguration::test_pyproject_cli_entry_point FAILED [ 89%]
+tests/test_project_structure.py::TestPackagingConfiguration::test_precommit_config_exists PASSED [ 91%]
+tests/test_project_structure.py::TestPackagingConfiguration::test_github_workflow_exists PASSED [ 93%]
+tests/test_project_structure.py::TestPackagingConfiguration::test_readme_exists PASSED [ 95%]
+tests/test_project_structure.py::TestPackagingConfiguration::test_contributing_exists PASSED [ 97%]
+tests/test_project_structure.py::TestPackagingConfiguration::test_license_exists PASSED [100%]
+
+=================================== FAILURES ===================================
+_______ TestPackagingConfiguration.test_pyproject_has_required_sections ________
+tests/test_project_structure.py:76: in test_pyproject_has_required_sections
+    import tomllib
+E   ModuleNotFoundError: No module named 'tomllib'
+__________ TestPackagingConfiguration.test_pyproject_project_metadata __________
+tests/test_project_structure.py:88: in test_pyproject_project_metadata
+    import tomllib
+E   ModuleNotFoundError: No module named 'tomllib'
+____________ TestPackagingConfiguration.test_pyproject_dependencies ____________
+tests/test_project_structure.py:101: in test_pyproject_dependencies
+    import tomllib
+E   ModuleNotFoundError: No module named 'tomllib'
+__________ TestPackagingConfiguration.test_pyproject_dev_dependencies __________
+tests/test_project_structure.py:117: in test_pyproject_dev_dependencies
+    import tomllib
+E   ModuleNotFoundError: No module named 'tomllib'
+__________ TestPackagingConfiguration.test_pyproject_cli_entry_point ___________
+tests/test_project_structure.py:133: in test_pyproject_cli_entry_point
+    import tomllib
+E   ModuleNotFoundError: No module named 'tomllib'
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.10.19-final-0 _______________
+
+Name                                         Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------------------------------
+src/aws_api_factory/__init__.py                  4      0      0      0   100%
+src/aws_api_factory/cli/__init__.py             56      0      6      1    98%   87->90
+src/aws_api_factory/config/__init__.py           1      1      0      0     0%   18
+src/aws_api_factory/constructs/__init__.py       1      1      0      0     0%   20
+src/aws_api_factory/templates/__init__.py        1      1      0      0     0%   11
+src/aws_api_factory/utils/__init__.py            1      1      0      0     0%   10
+----------------------------------------------------------------------------------------
+TOTAL                                           64      4      6      1    93%
+Coverage HTML written to dir htmlcov
+Required test coverage of 85% reached. Total coverage: 92.86%
+=========================== short test summary info ============================
+FAILED tests/test_project_structure.py::TestPackagingConfiguration::test_pyproject_has_required_sections - ModuleNotFoundError: No module named 'tomllib'
+FAILED tests/test_project_structure.py::TestPackagingConfiguration::test_pyproject_project_metadata - ModuleNotFoundError: No module named 'tomllib'
+FAILED tests/test_project_structure.py::TestPackagingConfiguration::test_pyproject_dependencies - ModuleNotFoundError: No module named 'tomllib'
+FAILED tests/test_project_structure.py::TestPackagingConfiguration::test_pyproject_dev_dependencies - ModuleNotFoundError: No module named 'tomllib'
+FAILED tests/test_project_structure.py::TestPackagingConfiguration::test_pyproject_cli_entry_point - ModuleNotFoundError: No module named 'tomllib'
+=================== 5 failed, 40 passed, 1 skipped in 0.35s ====================
+Error: Process completed with exit code 1.

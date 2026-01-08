@@ -20,7 +20,7 @@ Please be respectful and constructive in all interactions. We're all here to bui
 
 ### Prerequisites
 
-- **Python 3.9+** installed
+- **Python 3.12+** installed
 - **Node.js 18+** (for AWS CDK CLI)
 - **Docker** (for App Runner testing)
 - **Git** configured with your identity

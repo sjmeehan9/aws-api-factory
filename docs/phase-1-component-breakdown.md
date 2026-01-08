@@ -16,7 +16,7 @@
 
 **Dependencies**:
 - AWS account with admin access configured (Human prerequisite)
-- Python 3.9+ development environment (Human prerequisite)
+- Python 3.12+ development environment (Human prerequisite)
 - AWS CDK CLI installed globally (Human prerequisite)
 - Docker installed for App Runner testing (Human prerequisite)
 - GitHub repository created (Human prerequisite)
@@ -48,7 +48,7 @@
 
 **Dependencies**:
 - GitHub repository created (Human prerequisite)
-- Python 3.9+ installed (Human prerequisite)
+- Python 3.12+ installed (Human prerequisite)
 
 **Features**:
 - Monorepo structure with library and starter template separation (AI Agent)
@@ -83,9 +83,9 @@ Establish the foundational project structure as a Python monorepo with separate 
   - Dev: `pytest>=7.0`, `pytest-cov`, `black`, `bandit`, `pre-commit`
 
 **Detailed Implementation Requirements**:
-- **File: `pyproject.toml`**: Define project as `aws-api-factory` with version 0.1.0, include all production and development dependencies, configure build system (setuptools or hatchling), define CLI entry point `factory = aws_api_factory.cli:main`, specify Python 3.9+ requirement, include project URLs (GitHub repo, docs, issues).
+- **File: `pyproject.toml`**: Define project as `aws-api-factory` with version 0.1.0, include all production and development dependencies, configure build system (setuptools or hatchling), define CLI entry point `factory = aws_api_factory.cli:main`, specify Python 3.12+ requirement, include project URLs (GitHub repo, docs, issues).
 - **File: `.pre-commit-config.yaml`**: Configure hooks for black (formatter), bandit (security scanner), detect-secrets (prevent credential leaks), and trailing whitespace removal. Set to run on commit and push.
-- **File: `.github/workflows/ci.yml`**: Create GitHub Actions workflow that runs on push/PR, sets up Python 3.9-3.12 matrix, installs dependencies, runs pre-commit hooks, executes pytest with coverage reporting, fails if coverage <85% or any check fails.
+- **File: `.github/workflows/ci.yml`**: Create GitHub Actions workflow that runs on push/PR, sets up Python 3.12 matrix, installs dependencies, runs pre-commit hooks, executes pytest with coverage reporting, fails if coverage <85% or any check fails.
 - **File: `README.md`**: Write comprehensive overview including: project mission, quick start example, installation instructions (`pip install -e .` for dev), link to documentation, contribution guidelines, license information.
 - **File: `CONTRIBUTING.md`**: Document development setup (clone, create venv, install with `pip install -e ".[dev]"`), pre-commit hook setup, testing commands, PR process, code review expectations, branch naming conventions.
 
@@ -903,7 +903,7 @@ Create comprehensive starter template and documentation that enables new users t
 - AWS Account with admin access configured
 - AWS CLI installed and configured with credentials
 - AWS CDK CLI installed globally (`npm install -g aws-cdk`)
-- Python 3.9+ installed
+- Python 3.12+ installed
 - Docker installed (for App Runner testing)
 - GitHub repository created
 - CDK bootstrap completed in target regions (`cdk bootstrap`)

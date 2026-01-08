@@ -1,7 +1,7 @@
 # AWS API Factory
 
 [![CI](https://github.com/seanmeehan/aws-api-factory/actions/workflows/ci.yml/badge.svg)](https://github.com/seanmeehan/aws-api-factory/actions/workflows/ci.yml)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -76,7 +76,7 @@ That's it! Your REST API is now live on AWS. 🎉
 
 ## 📋 Requirements
 
-- **Python** 3.9 or higher
+- **Python** 3.12 or higher
 - **AWS CDK CLI** (`npm install -g aws-cdk`)
 - **AWS Account** with credentials configured
 - **Docker** (for App Runner deployments)

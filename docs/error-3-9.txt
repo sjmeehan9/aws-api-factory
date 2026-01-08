@@ -1,0 +1,29 @@
+Run pytest --cov-fail-under=85
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-8.4.2, pluggy-1.6.0 -- /opt/hostedtoolcache/Python/3.9.25/x64/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/aws-api-factory/aws-api-factory
+configfile: pyproject.toml
+testpaths: tests
+plugins: cov-7.0.0, typeguard-2.13.3, mock-3.15.1
+collecting ... collected 25 items / 2 errors
+
+==================================== ERRORS ====================================
+_________________ ERROR collecting tests/cli/test_commands.py __________________
+tests/cli/test_commands.py:9: in <module>
+    from aws_api_factory.cli import main
+src/aws_api_factory/cli/__init__.py:53: in <module>
+    def init(ctx: click.Context, project_name: str | None, template: str) -> None:
+E   TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+_____________ ERROR collecting tests/cli/test_commands_extended.py _____________
+tests/cli/test_commands_extended.py:8: in <module>
+    from aws_api_factory.cli import deploy, destroy, init, main, synth, validate
+src/aws_api_factory/cli/__init__.py:53: in <module>
+    def init(ctx: click.Context, project_name: str | None, template: str) -> None:
+E   TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+=========================== short test summary info ============================
+ERROR tests/cli/test_commands.py - TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+ERROR tests/cli/test_commands_extended.py - TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 2 errors in 0.27s ===============================
+Error: Process completed with exit code 2.

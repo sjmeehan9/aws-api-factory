@@ -99,7 +99,7 @@ This implementation plan delivers a production-ready, open-source AWS API Factor
 ### DevOps & Deployment
 - **CI/CD Pipeline**:
   - GitHub Actions workflow: lint → test → build → publish to PyPI
-  - Automated testing on Python 3.9, 3.10, 3.11, 3.12
+  - Automated testing on Python 3.12
   - Integration tests run against real AWS account (isolated test environment)
   - Release automation with semantic versioning
 - **Environment Promotion**:
@@ -150,7 +150,7 @@ This implementation plan delivers a production-ready, open-source AWS API Factor
 
 #### Phase 1 Prerequisites
 - **AWS Account Setup** (Human): AWS account with admin access, AWS CLI configured, CDK bootstrap completed in target regions
-- **Development Environment** (Human): Python 3.9+ installed, AWS CDK CLI installed (`npm install -g aws-cdk`), Docker installed for App Runner testing
+- **Development Environment** (Human): Python 3.12+ installed, AWS CDK CLI installed (`npm install -g aws-cdk`), Docker installed for App Runner testing
 - **GitHub Repository** (Human): Repository created, branch protection rules configured, GitHub Actions enabled
 - **PyPI Account** (Human, for releases): PyPI account created, API token generated for automated publishing
 
