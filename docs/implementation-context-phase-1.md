@@ -141,9 +141,89 @@ python -c "from aws_api_factory.config import load_config; print(load_config('st
 python -c "from aws_api_factory.config import export_json_schema; export_json_schema('factory-schema.json')"
 ```
 
-### Next Component
+---
+## Component 1.3: Profile Defaults Engine (Minimal vs Scalable Resolution)
 
-**Component 1.3:** CLI Foundation (Click + Rich)
-- Implement init, validate, synth, deploy, destroy commands
-- Rich console output with progress indicators
-- Config validation integration
+**Status:** ✅ Complete
+
+**Implementation Date:** January 9, 2026
+
+---
+
+### Overview
+
+Implemented the defaults resolution system that takes the user's profile choice (minimal/scalable) and resolves all unspecified or "auto" values to appropriate profile defaults. The engine ensures user-specified values are preserved while filling in missing values from profile defaults.
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `src/aws_api_factory/config/defaults.py` | Profile default dataclasses and accessors (~400 lines) |
+| `src/aws_api_factory/config/resolver.py` | DefaultsResolver class with explain support (~550 lines) |
+| `tests/config/test_defaults.py` | Defaults unit tests (51 tests) |
+| `tests/config/test_resolver.py` | Resolver unit tests (39 tests) |
+| `docs/reference/defaults.md` | Comprehensive defaults reference documentation |
+
+### Key Classes
+
+| Class | Purpose |
+|-------|---------|
+| `ProfileDefaults` | Container for all profile defaults |
+| `LambdaDefaults` | Lambda memory, timeout, concurrency defaults |
+| `ApiGatewayDefaults` | Throttle, metrics, tracing defaults |
+| `AppRunnerDefaults` | CPU, memory, instances defaults |
+| `DefaultsResolver` | Resolves config with profile defaults |
+| `ResolutionResult` | Result with applied defaults and warnings |
+
+### Key Functions
+
+| Function | Purpose |
+|----------|---------|
+| `get_defaults(profile)` | Get defaults for a profile |
+| `resolve_config(config)` | Resolve config with profile defaults |
+| `resolve_config_with_explanation()` | Resolve with human-readable explanation |
+| `compare_profiles()` | Compare minimal vs scalable defaults |
+| `validate_completeness(config)` | Check for unresolved "auto" values |
+
+### Profile Default Highlights
+
+| Setting | Minimal | Scalable |
+|---------|---------|----------|
+| Lambda memory | 512 MB | 1024 MB |
+| Lambda timeout | 30s | 60s |
+| Reserved concurrency | None | 10 |
+| API throttle rate | None | 1000 req/s |
+| App Runner instances | 1-10 | 2-25 |
+| DynamoDB PITR | Off | On |
+| Observability | Basic | Enhanced |
+
+### Test Coverage
+
+- **260 tests** total passing (added 90 tests for this component)
+- **93% overall coverage** (exceeds 85% threshold)
+- `defaults.py`: 86% coverage
+- `resolver.py`: 93% coverage
+
+### Verification Commands
+
+```bash
+# Run defaults tests
+pytest tests/config/test_defaults.py tests/config/test_resolver.py -v
+
+# Test resolve with explanation
+python -c "
+from aws_api_factory.config import load_config, resolve_config_with_explanation
+config = load_config('starter/factory.yaml')
+resolved, explanation = resolve_config_with_explanation(config)
+print(explanation)
+"
+
+# Compare profiles
+python -c "
+from aws_api_factory.config import compare_profiles
+for cat, fields in compare_profiles().items():
+    print(f'{cat}: {fields}')
+"
+```
+
+---

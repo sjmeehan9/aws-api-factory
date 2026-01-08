@@ -24,6 +24,22 @@ Example:
 
 """
 
+from aws_api_factory.config.defaults import (
+    MINIMAL_DEFAULTS,
+    SCALABLE_DEFAULTS,
+    ApiGatewayDefaults,
+    AppRunnerDefaults,
+    AuroraDefaults,
+    DynamoDBDefaults,
+    LambdaDefaults,
+    ObservabilityDefaults,
+    ProfileDefaults,
+    S3Defaults,
+    SecretsDefaults,
+    compare_profiles,
+    get_all_profiles,
+    get_defaults,
+)
 from aws_api_factory.config.loader import (
     ConfigLoadError,
     find_config_file,
@@ -65,6 +81,16 @@ from aws_api_factory.config.models import (
     S3Config,
     SecretsConfig,
     SecretsProviderEnum,
+)
+from aws_api_factory.config.resolver import (
+    DefaultsResolver,
+    ResolutionResult,
+    ResolvedValue,
+    apply_profile_defaults,
+    merge_defaults,
+    resolve_config,
+    resolve_config_with_explanation,
+    validate_completeness,
 )
 from aws_api_factory.config.schema import (
     export_json_schema,
@@ -149,4 +175,28 @@ __all__ = [
     "validate_profile_recommendations",
     "validate_unique_resolver_fields",
     "validate_unique_route_paths",
+    # Defaults
+    "ApiGatewayDefaults",
+    "AppRunnerDefaults",
+    "AuroraDefaults",
+    "DynamoDBDefaults",
+    "LambdaDefaults",
+    "MINIMAL_DEFAULTS",
+    "ObservabilityDefaults",
+    "ProfileDefaults",
+    "S3Defaults",
+    "SCALABLE_DEFAULTS",
+    "SecretsDefaults",
+    "compare_profiles",
+    "get_all_profiles",
+    "get_defaults",
+    # Resolver
+    "DefaultsResolver",
+    "ResolutionResult",
+    "ResolvedValue",
+    "apply_profile_defaults",
+    "merge_defaults",
+    "resolve_config",
+    "resolve_config_with_explanation",
+    "validate_completeness",
 ]
