@@ -56,7 +56,7 @@ Knowing the application purpose, mission and anticipated deliverables of the fin
 - Each component within a phase should be fully completable
 - No component should be partially implemented
 - Components should have clear input/output contracts
-- Clarify which components need to be executed by a human 
+- Clarify which components need to be executed by a human
 - Define acceptance criteria for each component
 - Specify testing requirements
 - Identify component dependencies within and across phases

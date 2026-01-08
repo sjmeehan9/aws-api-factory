@@ -4,7 +4,7 @@
 
 **Objective**: Deliver a working, installable AWS API Factory that enables users to deploy REST APIs with Lambda or App Runner compute, including authentication options and basic observability.
 
-**Deliverables**: 
+**Deliverables**:
 - Installable Python library (`aws-api-factory`) with proper packaging
 - Configuration system with validation and defaults resolution
 - CLI tools for project scaffolding and deployment
@@ -14,7 +14,7 @@
 - Starter template with working examples
 - Comprehensive documentation for getting started
 
-**Dependencies**: 
+**Dependencies**:
 - AWS account with admin access configured (Human prerequisite)
 - Python 3.9+ development environment (Human prerequisite)
 - AWS CDK CLI installed globally (Human prerequisite)
@@ -71,14 +71,14 @@ Establish the foundational project structure as a Python monorepo with separate 
 - [ ] All files have proper LICENSE headers (Apache 2.0 or MIT)
 
 **Technical Details**:
-- **Files to Create/Modify**: 
+- **Files to Create/Modify**:
   - `pyproject.toml`, `.pre-commit-config.yaml`, `README.md`, `CONTRIBUTING.md`, `LICENSE`
   - `.github/workflows/ci.yml`, `.gitignore`
 - **Key Functions/Classes**: N/A (configuration files)
 - **Human/AI Agent**: All configuration and setup by AI Agent; human reviews structure
 - **Database Changes**: N/A
 - **API Endpoints**: N/A
-- **Dependencies**: 
+- **Dependencies**:
   - Core: `aws-cdk-lib>=2.100.0`, `pydantic>=2.0`, `pyyaml`, `click>=8.0`
   - Dev: `pytest>=7.0`, `pytest-cov`, `black`, `bandit`, `pre-commit`
 
@@ -155,7 +155,7 @@ Implement the complete configuration system using Pydantic v2 models that valida
   - `tests/config/test_models.py`
   - `tests/config/test_loader.py`
   - `tests/config/fixtures/*.yaml`
-- **Key Functions/Classes**: 
+- **Key Functions/Classes**:
   - `FactoryConfig` (root model), `ProjectConfig`, `ProfileEnum`, `ApisConfig`, `RestApiConfig`, `GraphQLConfig`, `ComputeConfig`, `LambdaConfig`, `AppRunnerConfig`, `DataConfig`, `SecretsConfig`, `ObservabilityConfig`
   - `load_config(path: Path) -> FactoryConfig`
   - `export_json_schema() -> dict`
@@ -925,7 +925,7 @@ Create comprehensive starter template and documentation that enables new users t
 ### Risk 1: CDK Complexity
 **Risk**: CDK construct complexity leads to difficult-to-debug CloudFormation errors, frustrating users
 **Impact**: High - users may abandon project if errors are cryptic
-**Mitigation**: 
+**Mitigation**:
 - Extensive integration tests that synthesize and validate CloudFormation
 - Config validation catches errors before CDK synthesis
 - Clear error messages with suggestions in CLI
@@ -1056,7 +1056,7 @@ docs/
   examples/
     crud-api.md              # Complete CRUD example (Component 1.9)
   troubleshooting.md         # Common issues (Component 1.9)
-  
+
 README.md                    # Project overview (Component 1.1, 1.9)
 CONTRIBUTING.md              # Development guide (Component 1.1)
 ```
@@ -1227,7 +1227,7 @@ Components should be executed in order (1.1 → 1.2 → 1.3 → ... → 1.9) due
 
 This completes the detailed component breakdown for Phase 1: Core Framework & REST API Lane. Upon completion of all components, the AWS API Factory will have a solid foundation with working REST API capabilities, multiple compute options (Lambda and App Runner), comprehensive authentication, and excellent documentation.
 
-**Next Steps**: 
+**Next Steps**:
 1. Begin implementation with Component 1.1
 2. Follow component order strictly due to dependencies
 3. Complete all acceptance criteria before moving to next component

@@ -61,29 +61,29 @@ This implementation plan delivers a production-ready, open-source AWS API Factor
 - **Template Testing**: Starter template scaffolding tested to ensure generated projects can immediately synth and deploy
 
 ### Documentation Requirements
-- **Developer Context Documentation**: 
+- **Developer Context Documentation**:
   - Phase Overview: High-level goals and deliverables for each phase
   - README.md with quick start, installation, and architecture overview
   - CONTRIBUTING.md with development setup and PR guidelines
-- **Code Documentation**: 
+- **Code Documentation**:
   - Docstrings (Google style) for all public classes and functions
   - Inline comments for complex CDK construct logic and IAM policies
   - Type hints throughout for IDE support
-- **API Documentation**: 
+- **API Documentation**:
   - Config schema exported as JSON Schema with examples
   - CLI commands documented with --help text and examples
   - Construct interfaces documented for users building custom extensions
-- **Architecture Decision Records**: 
+- **Architecture Decision Records**:
   - ADR-001: Why two profiles only (Minimal/Scalable)
   - ADR-002: Config-driven vs code-driven approach
   - ADR-003: OpenAI Responses API for LLM assistant
   - ADR-004: Convention over configuration for adapters
-- **User Documentation**: 
+- **User Documentation**:
   - Getting Started guide (15-minute tutorial)
   - Configuration reference (all factory.yaml options)
   - Module guides (REST, GraphQL, Auth, Data, Compute)
   - Examples for common patterns (CRUD API, GraphQL blog, multi-service)
-- **Deployment Documentation**: 
+- **Deployment Documentation**:
   - AWS account setup and prerequisites
   - CI/CD integration patterns (GitHub Actions, GitLab CI)
   - Multi-environment deployment strategy
@@ -97,23 +97,23 @@ This implementation plan delivers a production-ready, open-source AWS API Factor
 - **Documentation**: All new features require corresponding documentation updates; docstrings required for public APIs
 
 ### DevOps & Deployment
-- **CI/CD Pipeline**: 
+- **CI/CD Pipeline**:
   - GitHub Actions workflow: lint → test → build → publish to PyPI
   - Automated testing on Python 3.9, 3.10, 3.11, 3.12
   - Integration tests run against real AWS account (isolated test environment)
   - Release automation with semantic versioning
-- **Environment Promotion**: 
+- **Environment Promotion**:
   - Library: Dev branch → Main (after review) → PyPI release (tagged)
   - Test deployments: Isolated AWS accounts per PR for integration testing
-- **Rollback Strategy**: 
+- **Rollback Strategy**:
   - PyPI versioning allows users to pin to last-known-good version
   - CloudFormation stack rollback on deployment failure
   - CDK context caching prevents unintended resource replacements
-- **Monitoring**: 
+- **Monitoring**:
   - Track PyPI download metrics and user adoption
   - Monitor GitHub issues for bug reports and feature requests
   - Log CDK deployment telemetry (opt-in) for usage patterns
-- **Alerting**: 
+- **Alerting**:
   - GitHub notifications for new issues/PRs
   - Dependabot alerts for security vulnerabilities in dependencies
   - CI/CD pipeline failures notify maintainers immediately
@@ -123,10 +123,10 @@ This implementation plan delivers a production-ready, open-source AWS API Factor
 #### Phase 1 Risks
 1. **Risk**: CDK construct complexity leads to difficult-to-debug CloudFormation errors
    - **Mitigation**: Extensive integration tests synthesizing stacks; clear validation errors at config level; escape hatches for custom IAM/props
-   
+
 2. **Risk**: App Runner construct requires Docker build capabilities that complicate CI/CD
    - **Mitigation**: Provide clear Dockerfile templates; test with common base images; document local vs CI build considerations
-   
+
 3. **Risk**: Authentication module configuration is confusing for users unfamiliar with Cognito/IAM
    - **Mitigation**: Sensible defaults; clear documentation with decision tree; working examples for each auth mode
 
@@ -136,13 +136,13 @@ This implementation plan delivers a production-ready, open-source AWS API Factor
 #### Phase 2 Risks
 1. **Risk**: Aurora Serverless v2 cold starts impact user experience
    - **Mitigation**: Document warm-up strategies; provide min ACU guidance; offer DynamoDB as faster alternative
-   
+
 2. **Risk**: LLM assistant generates incorrect adapter code leading to user frustration
    - **Mitigation**: Always generate diffs (never direct edits); extensive testing with sample codebases; clear "review required" warnings; graceful degradation if OpenAI unavailable
-   
+
 3. **Risk**: GraphQL schema-first approach conflicts with code-first resolver implementations
    - **Mitigation**: Clear conventions for schema location; validation that resolvers match schema; examples showing best practices
-   
+
 4. **Risk**: OpenAI API costs for LLM assistant become prohibitive for open-source project
    - **Mitigation**: User brings own API key; opt-in feature (not required); document expected costs; consider caching/rate limiting
 
