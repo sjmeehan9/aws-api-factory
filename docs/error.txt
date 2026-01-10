@@ -1,27 +1,197 @@
-(.venv) seanmeehan@Seans-MacBook-Air aws-api-factory % git commit -m "Component 1.3"
-trim trailing whitespace.................................................Passed
-fix end of files.........................................................Failed
-- hook id: end-of-file-fixer
+(.venv) seanmeehan@Seans-MacBook-Air aws-api-factory % git commit -m "Component 1.4"
+trim trailing whitespace.................................................Failed
+- hook id: trailing-whitespace
 - exit code: 1
 - files were modified by this hook
 
-Fixing docs/implementation-context-phase-1.md
+Fixing tests/cli/test_synth.py
+Fixing tests/cli/test_deploy.py
+Fixing tests/cli/test_init.py
+Fixing tests/cli/test_destroy.py
 
+fix end of files.........................................................Passed
 check yaml...........................................(no files to check)Skipped
 check json...........................................(no files to check)Skipped
-check toml...........................................(no files to check)Skipped
+check toml...............................................................Passed
 check for added large files..............................................Passed
 check for merge conflicts................................................Passed
 detect private key.......................................................Passed
 don't commit to branch...................................................Passed
-black....................................................................Passed
+black....................................................................Failed
+- hook id: black
+- files were modified by this hook
+
+reformatted starter/.factory-temp/app.py
+reformatted src/aws_api_factory/cli/commands/validate.py
+reformatted tests/cli/test_commands.py
+reformatted src/aws_api_factory/cli/commands/destroy.py
+reformatted tests/cli/test_commands_extended.py
+reformatted src/aws_api_factory/cli/commands/synth.py
+reformatted src/aws_api_factory/cli/commands/deploy.py
+reformatted tests/cli/test_init.py
+reformatted tests/cli/test_validate.py
+reformatted tests/cli/test_synth.py
+reformatted tests/cli/test_deploy.py
+reformatted tests/cli/test_destroy.py
+reformatted src/aws_api_factory/cli/utils.py
+
+All done! ✨ 🍰 ✨
+13 files reformatted, 5 files left unchanged.
+
 isort....................................................................Failed
 - hook id: isort
 - files were modified by this hook
 
-Fixing /Users/seanmeehan/Library/CloudStorage/OneDrive-Personal/Documents/Projects/aws-api-factory/src/aws_api_factory/config/__init__.py
-Fixing /Users/seanmeehan/Library/CloudStorage/OneDrive-Personal/Documents/Projects/aws-api-factory/src/aws_api_factory/config/resolver.py
+Fixing /Users/seanmeehan/Library/CloudStorage/OneDrive-Personal/Documents/Projects/aws-api-factory/src/aws_api_factory/cli/commands/synth.py
 
-bandit...................................................................Passed
+bandit...................................................................Failed
+- hook id: bandit
+- exit code: 1
+
+[main]  INFO    profile include tests: None
+[main]  INFO    profile exclude tests: B101
+[main]  INFO    cli include tests: None
+[main]  INFO    cli exclude tests: None
+[main]  INFO    using config: pyproject.toml
+[main]  INFO    running on Python 3.13.1
+Run started:2026-01-10 03:09:10.212464
+
+Test results:
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/0.0.0/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./src/aws_api_factory/cli/commands/init.py:19:0
+18      import shutil
+19      import subprocess
+20      from pathlib import Path
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/0.0.0/plugins/b607_start_process_with_partial_path.html
+   Location: ./src/aws_api_factory/cli/commands/init.py:181:17
+180             # Initialize git repo
+181             result = subprocess.run(
+182                 ["git", "init"],
+183                 cwd=project_dir,
+184                 capture_output=True,
+185                 text=True,
+186                 check=False,
+187             )
+188
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/0.0.0/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./src/aws_api_factory/cli/commands/init.py:181:17
+180             # Initialize git repo
+181             result = subprocess.run(
+182                 ["git", "init"],
+183                 cwd=project_dir,
+184                 capture_output=True,
+185                 text=True,
+186                 check=False,
+187             )
+188
+
+--------------------------------------------------
+>> Issue: [B607:start_process_with_partial_path] Starting a process with a partial executable path
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/0.0.0/plugins/b607_start_process_with_partial_path.html
+   Location: ./src/aws_api_factory/cli/commands/init.py:308:17
+307             # Install pre-commit hooks
+308             result = subprocess.run(
+309                 ["pre-commit", "install"],
+310                 cwd=project_dir,
+311                 capture_output=True,
+312                 text=True,
+313                 check=False,
+314             )
+315
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/0.0.0/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./src/aws_api_factory/cli/commands/init.py:308:17
+307             # Install pre-commit hooks
+308             result = subprocess.run(
+309                 ["pre-commit", "install"],
+310                 cwd=project_dir,
+311                 capture_output=True,
+312                 text=True,
+313                 check=False,
+314             )
+315
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/0.0.0/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./src/aws_api_factory/cli/utils.py:18:0
+17      import shutil
+18      import subprocess
+19      import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/0.0.0/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./src/aws_api_factory/cli/utils.py:475:25
+474                 try:
+475                     result = subprocess.run(
+476                         cmd,
+477                         cwd=cwd_path,
+478                         env=cmd_env,
+479                         capture_output=True,
+480                         text=True,
+481                         check=False,
+482                     )
+483                     progress.update(task, completed=True)
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/0.0.0/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./src/aws_api_factory/cli/utils.py:488:21
+487             try:
+488                 result = subprocess.run(
+489                     cmd,
+490                     cwd=cwd_path,
+491                     env=cmd_env,
+492                     capture_output=capture_output,
+493                     text=True,
+494                     check=False,
+495                 )
+496             except FileNotFoundError as e:
+
+--------------------------------------------------
+
+Code scanned:
+        Total lines of code: 2128
+        Total lines skipped (#nosec): 0
+
+Run metrics:
+        Total issues (by severity):
+                Undefined: 0
+                Low: 8
+                Medium: 0
+                High: 0
+        Total issues (by confidence):
+                Undefined: 0
+                Low: 0
+                Medium: 0
+                High: 8
+Files skipped (0):
+
 Detect secrets...........................................................Passed
 yamllint.............................................(no files to check)Skipped

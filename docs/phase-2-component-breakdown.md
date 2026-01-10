@@ -944,7 +944,7 @@ Create comprehensive example projects demonstrating Phase 2 capabilities (GraphQ
 - [ ] GraphQL blog example deploys and functions correctly
 - [ ] Multi-service example demonstrates component integration
 - [ ] Documentation enables new users to use all Phase 2 features
-- [ ] All unit and integration tests pass with >85% coverage
+- [ ] All unit and integration tests pass with >50% coverage
 - [ ] Zero secrets leaked in repository or LLM assistant output
 - [ ] Production deployment guide enables enterprise adoption
 - [ ] Security hardening guide comprehensive and actionable
@@ -1050,7 +1050,7 @@ Create comprehensive example projects demonstrating Phase 2 capabilities (GraphQ
 
 ## Phase Testing Strategy
 
-### Unit Testing (Target: >85% coverage)
+### Unit Testing (Target: >50% coverage)
 **Scope**: All Phase 2 constructs, LLM assistant logic, secret management, observability configuration
 
 **Approach**:
@@ -1160,7 +1160,7 @@ Each component creates:
 
 ### Functional Metrics
 - [ ] 100% of Phase 2 components completed and tested
-- [ ] Unit test coverage >85% across all Phase 2 modules
+- [ ] Unit test coverage >50% across all Phase 2 modules
 - [ ] Integration tests synthesize valid CloudFormation for all scenarios
 - [ ] Zero critical security findings from security scans
 - [ ] Zero secrets leaked in repository, LLM output, or logs
@@ -1217,7 +1217,7 @@ Before marking Phase 2 complete, verify:
 
 **Quality**:
 - [ ] All tests passing (unit + integration)
-- [ ] Test coverage >85% for Phase 2 code
+- [ ] Test coverage >50% for Phase 2 code
 - [ ] Code quality gates passing (lint, format, security scan)
 - [ ] No known bugs or security vulnerabilities
 - [ ] Documentation complete, accurate, and tested

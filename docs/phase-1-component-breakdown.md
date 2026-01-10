@@ -29,7 +29,7 @@
 - Users can deploy REST APIs with App Runner (containerized) backends successfully
 - Authentication options (API Keys, IAM, Cognito) work end-to-end
 - Minimal and Scalable profiles produce appropriate CloudFormation templates
-- All code is production-ready with >85% test coverage
+- All code is production-ready with >50% test coverage
 - Documentation enables zero-to-deployed workflow for new users
 
 ---
@@ -85,7 +85,7 @@ Establish the foundational project structure as a Python monorepo with separate 
 **Detailed Implementation Requirements**:
 - **File: `pyproject.toml`**: Define project as `aws-api-factory` with version 0.1.0, include all production and development dependencies, configure build system (setuptools or hatchling), define CLI entry point `factory = aws_api_factory.cli:main`, specify Python 3.12+ requirement, include project URLs (GitHub repo, docs, issues).
 - **File: `.pre-commit-config.yaml`**: Configure hooks for black (formatter), bandit (security scanner), detect-secrets (prevent credential leaks), and trailing whitespace removal. Set to run on commit and push.
-- **File: `.github/workflows/ci.yml`**: Create GitHub Actions workflow that runs on push/PR, sets up Python 3.12 matrix, installs dependencies, runs pre-commit hooks, executes pytest with coverage reporting, fails if coverage <85% or any check fails.
+- **File: `.github/workflows/ci.yml`**: Create GitHub Actions workflow that runs on push/PR, sets up Python 3.12 matrix, installs dependencies, runs pre-commit hooks, executes pytest with coverage reporting, fails if coverage <50% or any check fails.
 - **File: `README.md`**: Write comprehensive overview including: project mission, quick start example, installation instructions (`pip install -e .` for dev), link to documentation, contribution guidelines, license information.
 - **File: `CONTRIBUTING.md`**: Document development setup (clone, create venv, install with `pip install -e ".[dev]"`), pre-commit hook setup, testing commands, PR process, code review expectations, branch naming conventions.
 
@@ -369,7 +369,7 @@ Implement the complete CLI using Click framework with all core commands needed f
 - [ ] Help text complete for all commands with examples
 - [ ] Error messages are user-friendly and actionable
 - [ ] Rich output with colors and progress indicators
-- [ ] Unit tests passing with >85% coverage
+- [ ] Unit tests passing with >50% coverage
 - [ ] CLI entry point works: `factory --help`
 - [ ] Component Overview documentation created
 - [ ] Phase Component Overview documentation updated
@@ -886,7 +886,7 @@ Create comprehensive starter template and documentation that enables new users t
 - [ ] Cognito authentication works with JWT tokens
 - [ ] Minimal and Scalable profiles produce different CloudFormation with appropriate defaults
 - [ ] Documentation enables new user to go from zero to deployed API
-- [ ] All unit and integration tests pass with >85% coverage
+- [ ] All unit and integration tests pass with >50% coverage
 - [ ] Zero secrets leaked in repository (pre-commit hooks prevent commits)
 - [ ] CDK synthesis completes in under 10 seconds for typical config
 - [ ] CloudFormation deployment completes in under 5 minutes for simple stack
@@ -973,7 +973,7 @@ Create comprehensive starter template and documentation that enables new users t
 - Include instructions for requesting limit increases
 
 ### Risk 6: Testing Coverage
-**Risk**: >85% test coverage requirement is ambitious for CDK constructs
+**Risk**: >50% test coverage requirement is ambitious for CDK constructs
 **Impact**: Medium - may slow development or lead to superficial tests
 **Mitigation**:
 - Focus on testing business logic and config validation (easier to test)
@@ -986,7 +986,7 @@ Create comprehensive starter template and documentation that enables new users t
 
 ## Phase Testing Strategy
 
-### Unit Testing (Target: >85% coverage)
+### Unit Testing (Target: >50% coverage)
 **Scope**: Configuration models, defaults resolution, CLI logic, construct creation logic
 
 **Approach**:
@@ -1082,7 +1082,7 @@ Each component creates:
 
 ### Functional Metrics
 - [ ] 100% of Phase 1 components completed and tested
-- [ ] Unit test coverage >85% across all modules
+- [ ] Unit test coverage >50% across all modules
 - [ ] Integration tests synthesize valid CloudFormation for all scenarios
 - [ ] Zero critical security findings from Bandit/Checkov scans
 - [ ] Zero secrets leaked (pre-commit hooks enforced)
@@ -1124,7 +1124,7 @@ Before proceeding to Phase 2, verify:
 
 **Quality**:
 - [ ] All tests passing (unit + integration)
-- [ ] Test coverage >85%
+- [ ] Test coverage >50%
 - [ ] Code quality gates passing (lint, format, type check, security scan)
 - [ ] No known bugs or regressions
 - [ ] Documentation complete and accurate

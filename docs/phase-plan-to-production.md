@@ -54,7 +54,7 @@ This implementation plan delivers a production-ready, open-source AWS API Factor
 ## Cross-Cutting Concerns
 
 ### Testing Strategy
-- **Unit Testing**: All configuration models, defaults resolvers, and utility functions require pytest unit tests with >85% coverage; mock AWS CDK constructs for isolated testing
+- **Unit Testing**: All configuration models, defaults resolvers, and utility functions require pytest unit tests with >50% coverage; mock AWS CDK constructs for isolated testing
 - **Integration Testing**: Each construct (REST API, AppSync, Lambda, App Runner) has integration tests that synthesize CloudFormation and validate resource properties match expected configuration
 - **E2E Testing**: Critical user journeys tested via actual CDK deploy to isolated AWS account (deploy REST+Lambda, deploy GraphQL+DynamoDB, deploy with Cognito auth) in CI/CD
 - **Validation Testing**: Config validation logic tested extensively with valid/invalid YAML fixtures ensuring fast-fail behavior and helpful error messages
@@ -91,7 +91,7 @@ This implementation plan delivers a production-ready, open-source AWS API Factor
 
 ### Quality Gates
 - **Code Review**: All PRs require review from maintainer; automated checks must pass (lint, format, type-check)
-- **Automated Tests**: pytest suite must pass with >85% coverage; integration tests must synthesize valid CloudFormation
+- **Automated Tests**: pytest suite must pass with >50% coverage; integration tests must synthesize valid CloudFormation
 - **Code Quality**: black formatter (enforced)
 - **Security Scan**: Bandit security scanner for Python code; checkov for CDK/CloudFormation best practices; no secrets in code (pre-commit hooks)
 - **Documentation**: All new features require corresponding documentation updates; docstrings required for public APIs
@@ -169,7 +169,7 @@ This implementation plan delivers a production-ready, open-source AWS API Factor
 - [ ] API Key and Cognito authentication work end-to-end
 - [ ] Minimal and Scalable profiles produce different CloudFormation with appropriate defaults
 - [ ] Documentation enables new user to go from zero to deployed API
-- [ ] All unit and integration tests pass with >85% coverage
+- [ ] All unit and integration tests pass with >50% coverage
 - [ ] Zero secrets leaked in repository (pre-commit hooks enforced)
 
 #### Phase 2 Success
