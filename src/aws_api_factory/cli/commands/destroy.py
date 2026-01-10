@@ -220,12 +220,12 @@ def destroy(
     print_step(current_step, total_steps, "Checking AWS credentials...")
 
     if not check_aws_credentials():
-        print_warning("AWS credentials may not be configured")
-        if not force:
-            if not confirm_action(
-                "AWS credentials appear to be missing. Continue anyway?"
-            ):
-                raise SystemExit(1)
+        print_error(
+            "AWS credentials not configured",
+            "Configure AWS credentials using 'aws configure' or set "
+            "AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables.",
+        )
+        raise SystemExit(5)
     else:
         print_success("AWS credentials available")
 

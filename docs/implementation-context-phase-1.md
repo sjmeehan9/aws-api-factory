@@ -313,3 +313,90 @@ cd my-api && factory validate
 ```
 
 ---
+
+## Component 1.5: CDK Base Stack and Constructs Architecture
+
+**Status:** ✅ Complete
+
+**Implementation Date:** January 11, 2026
+
+---
+
+### Overview
+
+Implemented the foundational CDK architecture with `FactoryStack`, `BaseConstruct`, `ConstructRegistry`, and `OutputManager`. This forms the backbone that all feature constructs (REST API, Lambda, App Runner, Auth) plug into, ensuring consistent patterns for resource naming, tagging, output management, and construct composition.
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `src/aws_api_factory/constructs/base.py` | BaseConstruct abstract class (~390 lines) |
+| `src/aws_api_factory/constructs/outputs.py` | OutputManager for stack outputs (~320 lines) |
+| `src/aws_api_factory/constructs/factory_stack.py` | FactoryStack and ConstructRegistry (~470 lines) |
+| `starter/infra/app.py` | CDK app entry point |
+| `starter/infra/stacks/factory_stack.py` | User-customizable stack with escape hatches |
+| `tests/constructs/__init__.py` | Export verification tests (12 tests) |
+| `tests/constructs/test_factory_stack.py` | Comprehensive tests (49 tests) |
+| `docs/guides/construct-development.md` | Developer guide for custom constructs |
+
+### Key Classes
+
+| Class | Purpose |
+|-------|---------|
+| `BaseConstruct` | Abstract base with naming, tagging, output helpers |
+| `FactoryStack` | Main stack composing all constructs |
+| `ConstructRegistry` | Dynamic construct loading with priority ordering |
+| `OutputManager` | Collects and exports stack outputs |
+| `OutputEntry` | Single output entry dataclass |
+| `ConstructRegistration` | Construct metadata for registry |
+
+### Key Functions
+
+| Function | Purpose |
+|----------|---------|
+| `generate_resource_name()` | Consistent `{project}-{env}-{type}-{name}` naming |
+| `apply_global_tags()` | Apply Project/Environment/Profile tags |
+| `sanitize_resource_id()` | Convert paths to valid construct IDs |
+| `create_factory_stack()` | Convenience factory function |
+| `register_construct()` | Register with default registry |
+
+### Architecture Patterns
+
+- **Composition**: FactoryStack composes constructs via ConstructRegistry
+- **Priority ordering**: Lower priority constructs created first (for dependencies)
+- **Validation-first**: BaseConstruct validates config before creating resources
+- **Escape hatches**: User stack supports importing VPCs, certs, hosted zones
+
+### Test Coverage
+
+- **412 tests** total passing (added 61 tests for this component)
+- **83.25% overall coverage** (exceeds 50% threshold)
+- `base.py`: 88% coverage
+- `factory_stack.py`: 92% coverage
+- `outputs.py`: 98% coverage
+
+### Verification Commands
+
+```bash
+# Run constructs tests
+pytest tests/constructs/ -v
+
+# Verify stack synthesis
+python -c "
+from aws_cdk import App
+from aws_api_factory.config import load_config, resolve_config
+from aws_api_factory.constructs import FactoryStack
+
+config = load_config('starter/factory.yaml')
+resolved = resolve_config(config)
+app = App()
+stack = FactoryStack(app, 'Test', config=resolved, environment='dev')
+app.synth()
+print(f'Stack: {stack.stack_name}, Outputs: {len(stack.output_manager)}')
+"
+
+# Verify imports
+python -c "from aws_api_factory.constructs import FactoryStack, BaseConstruct, OutputManager; print('✅ Imports OK')"
+```
+
+---
