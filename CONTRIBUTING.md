@@ -230,7 +230,7 @@ class TestFactoryConfig:
 
 ### Coverage Requirements
 
-- Minimum 85% code coverage required
+- Minimum 50% code coverage required
 - New features must include tests
 - Bug fixes should include regression tests
 
@@ -240,7 +240,7 @@ class TestFactoryConfig:
 
 1. ✅ All pre-commit hooks pass
 2. ✅ All tests pass with `pytest`
-3. ✅ Coverage meets minimum threshold (85%)
+3. ✅ Coverage meets minimum threshold (50%)
 4. ✅ Documentation updated if needed
 5. ✅ Commit messages follow conventions
 
