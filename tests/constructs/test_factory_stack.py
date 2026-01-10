@@ -32,6 +32,35 @@ from aws_api_factory.constructs.outputs import OutputEntry, OutputManager
 
 
 @pytest.fixture
+def temp_project(tmp_path):
+    """Create a temporary project with Lambda code."""
+    import os
+
+    # Create Lambda code directories
+    hello_dir = tmp_path / "src" / "services" / "hello"
+    hello_dir.mkdir(parents=True, exist_ok=True)
+
+    orders_dir = tmp_path / "src" / "services" / "orders"
+    orders_dir.mkdir(parents=True, exist_ok=True)
+
+    # Create handler files
+    handler_code = """def handler(event, context):
+    return {"statusCode": 200, "body": "Hello"}
+"""
+    (hello_dir / "handler.py").write_text(handler_code)
+    (orders_dir / "handler.py").write_text(handler_code)
+
+    # Change to temp directory for Lambda asset resolution
+    original_cwd = os.getcwd()
+    os.chdir(tmp_path)
+
+    yield tmp_path
+
+    # Restore original directory
+    os.chdir(original_cwd)
+
+
+@pytest.fixture
 def app() -> App:
     """Create a CDK App for testing."""
     return App()
@@ -705,7 +734,7 @@ class TestFactoryStack:
     """Tests for FactoryStack class."""
 
     def test_create_minimal_stack(
-        self, app: App, minimal_config: FactoryConfig
+        self, app: App, minimal_config: FactoryConfig, temp_project
     ) -> None:
         """Test creating a minimal stack."""
         stack = FactoryStack(app, "TestStack", config=minimal_config, environment="dev")
@@ -715,7 +744,7 @@ class TestFactoryStack:
         assert stack.stack_name == "test-api-dev"
 
     def test_create_scalable_stack(
-        self, app: App, scalable_config: FactoryConfig
+        self, app: App, scalable_config: FactoryConfig, temp_project
     ) -> None:
         """Test creating a scalable profile stack."""
         stack = FactoryStack(
@@ -733,7 +762,7 @@ class TestFactoryStack:
             FactoryStack(app, "TestStack", config=minimal_config, environment="staging")
 
     def test_standard_outputs_added(
-        self, app: App, minimal_config: FactoryConfig
+        self, app: App, minimal_config: FactoryConfig, temp_project
     ) -> None:
         """Test that standard metadata outputs are added."""
         stack = FactoryStack(app, "TestStack", config=minimal_config, environment="dev")
@@ -745,7 +774,7 @@ class TestFactoryStack:
         assert "Region" in stack.output_manager
 
     def test_get_construct_returns_none_for_unregistered(
-        self, app: App, minimal_config: FactoryConfig
+        self, app: App, minimal_config: FactoryConfig, temp_project
     ) -> None:
         """Test get_construct returns None for unregistered construct."""
         stack = FactoryStack(app, "TestStack", config=minimal_config, environment="dev")
@@ -754,14 +783,16 @@ class TestFactoryStack:
         assert result is None
 
     def test_has_construct_false_for_unregistered(
-        self, app: App, minimal_config: FactoryConfig
+        self, app: App, minimal_config: FactoryConfig, temp_project
     ) -> None:
         """Test has_construct returns False for unregistered."""
         stack = FactoryStack(app, "TestStack", config=minimal_config, environment="dev")
 
         assert not stack.has_construct("nonexistent.section")
 
-    def test_stack_synthesizes(self, app: App, minimal_config: FactoryConfig) -> None:
+    def test_stack_synthesizes(
+        self, app: App, minimal_config: FactoryConfig, temp_project
+    ) -> None:
         """Test that stack synthesizes valid CloudFormation."""
         stack = FactoryStack(app, "TestStack", config=minimal_config, environment="dev")
 
@@ -770,7 +801,9 @@ class TestFactoryStack:
         outputs = template.find_outputs("*")
         assert len(outputs) > 0
 
-    def test_custom_registry(self, app: App, minimal_config: FactoryConfig) -> None:
+    def test_custom_registry(
+        self, app: App, minimal_config: FactoryConfig, temp_project
+    ) -> None:
         """Test using a custom registry."""
         custom_registry = ConstructRegistry()
 
@@ -789,14 +822,18 @@ class TestFactoryStack:
 class TestCreateFactoryStack:
     """Tests for create_factory_stack convenience function."""
 
-    def test_creates_stack(self, app: App, minimal_config: FactoryConfig) -> None:
+    def test_creates_stack(
+        self, app: App, minimal_config: FactoryConfig, temp_project
+    ) -> None:
         """Test that create_factory_stack creates a valid stack."""
         stack = create_factory_stack(app, minimal_config, "dev")
 
         assert isinstance(stack, FactoryStack)
         assert stack.environment_name == "dev"
 
-    def test_custom_stack_id(self, app: App, minimal_config: FactoryConfig) -> None:
+    def test_custom_stack_id(
+        self, app: App, minimal_config: FactoryConfig, temp_project
+    ) -> None:
         """Test custom stack ID."""
         stack = create_factory_stack(
             app, minimal_config, "dev", stack_id="CustomStackId"

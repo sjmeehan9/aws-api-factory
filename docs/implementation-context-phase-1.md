@@ -400,3 +400,81 @@ python -c "from aws_api_factory.constructs import FactoryStack, BaseConstruct, O
 ```
 
 ---
+
+## Component 1.6: REST API + Lambda Integration Construct
+
+**Status:** ✅ Complete
+
+**Implementation Date:** January 12, 2026
+
+---
+
+### Overview
+
+Implemented production-ready constructs for Lambda functions and REST API Gateway with Lambda proxy integration. The `LambdaFunctionConstruct` creates Lambda functions with IAM roles, logging, and X-Ray tracing based on profile. The `RestApiConstruct` creates API Gateway REST APIs with routes, CloudWatch logging, throttling, and CORS. The combined `RestLambdaConstruct` orchestrates both, enabling full REST API + Lambda deployments from `factory.yaml`.
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `src/aws_api_factory/constructs/compute_lambda/__init__.py` | Module exports |
+| `src/aws_api_factory/constructs/compute_lambda/function.py` | LambdaFunctionConstruct (~330 lines) |
+| `src/aws_api_factory/constructs/rest_api/__init__.py` | Module exports |
+| `src/aws_api_factory/constructs/rest_api/api.py` | RestApiConstruct (~400 lines) |
+| `src/aws_api_factory/constructs/rest_api/lambda_integration.py` | Integration helpers (~165 lines) |
+| `src/aws_api_factory/constructs/rest_api/rest_lambda.py` | Combined construct (~195 lines) |
+| `tests/constructs/test_lambda.py` | Lambda construct tests (13 tests) |
+| `tests/constructs/test_rest_api.py` | REST API tests (15 tests) |
+| `tests/integration/__init__.py` | Integration test module |
+| `tests/integration/test_rest_lambda_e2e.py` | E2E tests (10 tests) |
+
+### Key Classes
+
+| Class | Purpose |
+|-------|---------|
+| `LambdaFunctionConstruct` | Creates Lambda functions with roles, logs, tracing |
+| `RestApiConstruct` | Creates REST API with routes, CORS, throttling |
+| `RestLambdaConstruct` | Orchestrates Lambda + API Gateway together |
+
+### Key Functions
+
+| Function | Purpose |
+|----------|---------|
+| `create_lambda_integration()` | Creates Lambda proxy integration |
+| `grant_api_invoke_permission()` | Grants API Gateway permission to invoke Lambda |
+| `LambdaFunctionConstruct.get_function()` | Get Lambda function by service name |
+| `RestApiConstruct.get_resource()` | Get API resource by path |
+
+### Profile Differences
+
+| Feature | Minimal | Scalable |
+|---------|---------|----------|
+| Lambda Memory | 512 MB | 1024 MB |
+| Lambda Timeout | 30s | 60s |
+| X-Ray Tracing | Disabled | Active |
+| API Metrics | Disabled | Enabled |
+| API Tracing | Disabled | Enabled |
+| Log Retention | 1 week | 1 week |
+
+### Test Coverage
+
+- **451 tests** total passing (added 38 tests for this component)
+- **83.77% overall coverage** (exceeds 50% threshold)
+- `compute_lambda/function.py`: 91% coverage
+- `rest_api/api.py`: 82% coverage
+- `rest_api/rest_lambda.py`: 78% coverage
+
+### Verification Commands
+
+```bash
+# Run Lambda + REST API tests
+pytest tests/constructs/test_lambda.py tests/constructs/test_rest_api.py -v
+
+# Run integration tests
+pytest tests/integration/test_rest_lambda_e2e.py -v
+
+# Full test suite
+pytest tests/ -v
+```
+
+---

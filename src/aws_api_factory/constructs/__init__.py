@@ -37,6 +37,12 @@ from aws_api_factory.constructs.base import (
     apply_global_tags,
     sanitize_resource_id,
 )
+
+# Import feature constructs
+from aws_api_factory.constructs.compute_lambda import (
+    LambdaFunctionConstruct,
+    create_lambda_function,
+)
 from aws_api_factory.constructs.factory_stack import (
     ConstructRegistration,
     ConstructRegistry,
@@ -46,6 +52,13 @@ from aws_api_factory.constructs.factory_stack import (
     register_construct,
 )
 from aws_api_factory.constructs.outputs import OutputEntry, OutputManager
+from aws_api_factory.constructs.rest_api import (
+    RestApiConstruct,
+    RestLambdaConstruct,
+    attach_lambda_integration,
+    create_lambda_integration,
+    grant_api_invoke_permission,
+)
 
 __all__ = [
     # Base construct
@@ -62,4 +75,13 @@ __all__ = [
     # Output management
     "OutputManager",
     "OutputEntry",
+    # Lambda constructs
+    "LambdaFunctionConstruct",
+    "create_lambda_function",
+    # REST API constructs
+    "RestApiConstruct",
+    "RestLambdaConstruct",
+    "attach_lambda_integration",
+    "create_lambda_integration",
+    "grant_api_invoke_permission",
 ]

@@ -345,7 +345,8 @@ class FactoryStack(Stack):
         self.profile_defaults = profile_defaults
 
         # Use provided registry or default
-        self._registry = registry or get_default_registry()
+        # Note: Use 'is None' check since an empty registry is still valid
+        self._registry = registry if registry is not None else get_default_registry()
 
         # Initialize output manager
         self.output_manager = OutputManager(
@@ -477,3 +478,32 @@ def create_factory_stack(
         environment=environment,
         env=env,
     )
+
+
+# =============================================================================
+# Register Core Constructs with Default Registry
+# =============================================================================
+
+
+def _register_core_constructs() -> None:
+    """Register core factory constructs with the default registry.
+
+    This function is called when the module is imported to register
+    the built-in constructs. Users can register additional custom
+    constructs using the register_construct() function.
+    """
+    from aws_api_factory.constructs.rest_api import RestLambdaConstruct
+
+    # REST API + Lambda integration (creates both Lambda and API Gateway)
+    # Priority 50 ensures it's created early for other constructs to reference
+    if "apis.rest_lambda" not in _default_registry:
+        _default_registry.register(
+            RestLambdaConstruct,
+            "apis.rest_lambda",
+            enabled_check=lambda c: c.apis.rest.enabled and c.compute.lambda_.enabled,
+            priority=50,
+        )
+
+
+# Register constructs when module is imported
+_register_core_constructs()
