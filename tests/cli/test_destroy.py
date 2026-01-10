@@ -210,20 +210,24 @@ class TestDestroyCommand:
         self, cli_runner: CliRunner, starter_dir: Path
     ) -> None:
         """Test destroy fails gracefully when CDK is not installed."""
-        with patch("shutil.which", return_value=None):
-            result = cli_runner.invoke(
-                cli,
-                [
-                    "destroy",
-                    "dev",
-                    "--config",
-                    str(starter_dir / "factory.yaml"),
-                    "--force",
-                ],
-            )
+        with patch(
+            "aws_api_factory.cli.commands.destroy.check_aws_credentials"
+        ) as mock_creds:
+            mock_creds.return_value = True
+            with patch("shutil.which", return_value=None):
+                result = cli_runner.invoke(
+                    cli,
+                    [
+                        "destroy",
+                        "dev",
+                        "--config",
+                        str(starter_dir / "factory.yaml"),
+                        "--force",
+                    ],
+                )
 
-            assert result.exit_code != 0
-            assert "CDK" in result.output
+                assert result.exit_code != 0
+                assert "CDK" in result.output
 
     def test_destroy_warns_unknown_environment(
         self, cli_runner: CliRunner, starter_dir: Path
