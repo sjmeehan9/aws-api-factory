@@ -27,6 +27,13 @@ Example:
 """
 
 from aws_api_factory.constructs.rest_api.api import RestApiConstruct
+from aws_api_factory.constructs.rest_api.http_integration import (
+    attach_http_integration_to_resource,
+    attach_http_integration_to_routes,
+    create_catch_all_proxy,
+    create_http_integration,
+    create_http_proxy_integration,
+)
 from aws_api_factory.constructs.rest_api.lambda_integration import (
     attach_lambda_integration,
     create_lambda_integration,
@@ -35,9 +42,17 @@ from aws_api_factory.constructs.rest_api.lambda_integration import (
 from aws_api_factory.constructs.rest_api.rest_lambda import RestLambdaConstruct
 
 __all__ = [
+    # Constructs
     "RestApiConstruct",
     "RestLambdaConstruct",
+    # Lambda integration
     "attach_lambda_integration",
     "create_lambda_integration",
     "grant_api_invoke_permission",
+    # HTTP integration (for App Runner)
+    "attach_http_integration_to_resource",
+    "attach_http_integration_to_routes",
+    "create_catch_all_proxy",
+    "create_http_integration",
+    "create_http_proxy_integration",
 ]

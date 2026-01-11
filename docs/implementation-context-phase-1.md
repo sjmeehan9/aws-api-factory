@@ -478,3 +478,75 @@ pytest tests/ -v
 ```
 
 ---
+
+## Component 1.7: REST API + App Runner Integration Construct
+
+**Status:** ✅ Complete
+
+**Implementation Date:** January 13, 2026
+
+---
+
+### Overview
+
+Implemented production-ready constructs for AWS App Runner containerized services with API Gateway HTTP integration. The `AppRunnerConstruct` builds Docker images via CDK's `DockerImageAsset`, creates CfnService with health checks, auto-scaling configurations, and IAM roles for ECR access and CloudWatch Logs. HTTP integration functions enable API Gateway to proxy requests to App Runner service URLs.
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `src/aws_api_factory/constructs/compute_apprunner/__init__.py` | Module exports |
+| `src/aws_api_factory/constructs/compute_apprunner/service.py` | AppRunnerConstruct (~620 lines) |
+| `src/aws_api_factory/constructs/rest_api/http_integration.py` | HTTP integration helpers (~280 lines) |
+| `starter/src/services/public_api/app.py` | Example FastAPI app (~300 lines) |
+| `starter/src/services/public_api/Dockerfile` | Multi-stage production Dockerfile (~85 lines) |
+| `starter/src/services/public_api/requirements.txt` | Python dependencies |
+| `tests/constructs/test_apprunner.py` | App Runner unit tests (18 tests) |
+| `tests/integration/test_rest_apprunner_e2e.py` | E2E integration tests (13 tests) |
+
+### Key Classes
+
+| Class | Purpose |
+|-------|---------|
+| `AppRunnerConstruct` | Creates App Runner services from Dockerfile configs |
+
+### Key Functions
+
+| Function | Purpose |
+|----------|---------|
+| `create_apprunner_service()` | Convenience function for quick setup |
+| `create_http_integration()` | Creates HTTP integration to App Runner URL |
+| `create_http_proxy_integration()` | Creates HTTP proxy with path passthrough |
+| `attach_http_integration_to_routes()` | Attaches integration to multiple API routes |
+| `create_catch_all_proxy()` | Creates `{proxy+}` catch-all resource |
+
+### Profile Differences
+
+| Feature | Minimal | Scalable |
+|---------|---------|----------|
+| CPU | 1 vCPU | 2 vCPU |
+| Memory | 2 GB | 4 GB |
+| Min Instances | 1 | 2 |
+| Max Instances | 10 | 25 |
+| Health Check | TCP | HTTP `/healthz` |
+
+### Test Coverage
+
+- **31 App Runner tests** passing (18 unit + 13 integration)
+- `compute_apprunner/service.py`: 91% coverage
+- `rest_api/http_integration.py`: 33% coverage (core paths tested)
+
+### Verification Commands
+
+```bash
+# Run App Runner tests
+pytest tests/constructs/test_apprunner.py -v
+
+# Run integration tests
+pytest tests/integration/test_rest_apprunner_e2e.py -v
+
+# Verify imports work
+python -c "from aws_api_factory.constructs import AppRunnerConstruct; print('OK')"
+```
+
+---

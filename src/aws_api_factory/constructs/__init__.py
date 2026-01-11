@@ -39,6 +39,10 @@ from aws_api_factory.constructs.base import (
 )
 
 # Import feature constructs
+from aws_api_factory.constructs.compute_apprunner import (
+    AppRunnerConstruct,
+    create_apprunner_service,
+)
 from aws_api_factory.constructs.compute_lambda import (
     LambdaFunctionConstruct,
     create_lambda_function,
@@ -55,7 +59,12 @@ from aws_api_factory.constructs.outputs import OutputEntry, OutputManager
 from aws_api_factory.constructs.rest_api import (
     RestApiConstruct,
     RestLambdaConstruct,
+    attach_http_integration_to_resource,
+    attach_http_integration_to_routes,
     attach_lambda_integration,
+    create_catch_all_proxy,
+    create_http_integration,
+    create_http_proxy_integration,
     create_lambda_integration,
     grant_api_invoke_permission,
 )
@@ -78,10 +87,19 @@ __all__ = [
     # Lambda constructs
     "LambdaFunctionConstruct",
     "create_lambda_function",
+    # App Runner constructs
+    "AppRunnerConstruct",
+    "create_apprunner_service",
     # REST API constructs
     "RestApiConstruct",
     "RestLambdaConstruct",
     "attach_lambda_integration",
     "create_lambda_integration",
     "grant_api_invoke_permission",
+    # HTTP integration (for App Runner)
+    "attach_http_integration_to_resource",
+    "attach_http_integration_to_routes",
+    "create_catch_all_proxy",
+    "create_http_integration",
+    "create_http_proxy_integration",
 ]

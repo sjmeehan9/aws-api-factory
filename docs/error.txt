@@ -1,34 +1,81 @@
-================================ tests coverage ================================
-_______________ coverage: platform linux, python 3.12.12-final-0 _______________
+(.venv) seanmeehan@Seans-MacBook-Air aws-api-factory % pre-commit run --all-files
+trim trailing whitespace.................................................Passed
+fix end of files.........................................................Passed
+check yaml...............................................................Passed
+check json...........................................(no files to check)Skipped
+check toml...............................................................Passed
+check for added large files..............................................Passed
+check for merge conflicts................................................Passed
+detect private key.......................................................Passed
+don't commit to branch...................................................Passed
+black....................................................................Passed
+isort....................................................................Passed
+bandit...................................................................Failed
+- hook id: bandit
+- exit code: 1
 
-Name                                              Stmts   Miss Branch BrPart  Cover   Missing
----------------------------------------------------------------------------------------------
-src/aws_api_factory/__init__.py                       4      0      0      0   100%
-src/aws_api_factory/cli/__init__.py                   8      0      0      0   100%
-src/aws_api_factory/cli/commands/__init__.py          6      0      0      0   100%
-src/aws_api_factory/cli/commands/deploy.py          175     63     62     15    58%   68->67, 71, 88-155, 167-188, 282-284, 304-307, 318, 333-338, 349-354, 376, 379->383, 384, 395, 398-399, 421-428, 432, 435-445, 449, 457, 459
-src/aws_api_factory/cli/commands/destroy.py         114     26     28      8    73%   65->64, 68, 85-122, 200-202, 211-214, 239-242, 263->271, 281-286, 305, 316, 319-320, 324
-src/aws_api_factory/cli/commands/init.py            183     56     78     14    64%   54-62, 111, 113, 133-138, 143, 153, 176-178, 192->249, 250, 253-257, 270-325, 340-342, 349, 351-354, 437-442, 457-459, 483
-src/aws_api_factory/cli/commands/synth.py           117     31     38      8    74%   63->62, 67, 87-132, 221-223, 243, 260-266, 282, 293, 305->308, 312-324, 331-344
-src/aws_api_factory/cli/commands/validate.py         58      3     14      1    94%   126-128, 144->150
-src/aws_api_factory/cli/main.py                      43     11      2      1    73%   89, 106-118
-src/aws_api_factory/cli/utils.py                    211     55     70     12    69%   133, 144->exit, 198, 201, 205->209, 210-211, 225-226, 269->277, 277->287, 288-289, 297-298, 306-307, 335-340, 373-374, 452-505, 561-564, 611-618
-src/aws_api_factory/config/__init__.py                7      0      0      0   100%
-src/aws_api_factory/config/defaults.py              140      2     60     26    86%   263, 400, 436->441, 441->446, 446->456, 457->465, 465->473, 473->483, 484->489, 489->494, 494->502, 502->510, 510->520, 521->529, 529->539, 540->545, 545->553, 553->563, 564->572, 572->579, 580->585, 585->593, 593->601, 601->609, 609->619, 620->627
-src/aws_api_factory/config/loader.py                123      7     52      6    93%   99->105, 102, 130->135, 135->138, 202-208, 284-285, 359->369
-src/aws_api_factory/config/models.py                273      5     68      5    97%   159, 164, 1157, 1167, 1175
-src/aws_api_factory/config/resolver.py              207     11     96      7    93%   180->175, 184-187, 252->219, 380-381, 403-404, 447-448, 548
-src/aws_api_factory/config/schema.py                 53      1     18      2    96%   181
-src/aws_api_factory/config/validators.py            135      8     80     12    91%   69-73, 84, 118, 145->158, 154, 173, 248->247, 292->286, 332->340, 349->358, 397-398, 420->exit
-src/aws_api_factory/constructs/base.py               58      7     14      0    88%   217, 270-278, 311-321
-src/aws_api_factory/constructs/factory_stack.py      88      6     18      2    92%   182-191, 204-205, 247, 341->345
-src/aws_api_factory/constructs/outputs.py            77      0     22      2    98%   242->244, 271->273
----------------------------------------------------------------------------------------------
-TOTAL                                              2080    292    720    121    83%
-Coverage HTML written to dir htmlcov
-Required test coverage of 50% reached. Total coverage: 82.54%
-=========================== short test summary info ============================
-FAILED tests/cli/test_destroy.py::TestDestroyCommand::test_destroy_cdk_not_found - assert 'CDK' in "\n⚠ DESTRUCTIVE OPERATION\nDestroying environment: dev\nConfiguration: \n/home/runner/work/aws-api-factory/aws-api-factory/starter/factory.yaml\n\n[1/4] Loading configuration...\n✓ Configuration loaded\n[2/4] Checking AWS credentials...\n✗ Error: AWS credentials not configured\n  Suggestion: Configure AWS credentials using 'aws configure' or set \nAWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables.\n"
- +  where "\n⚠ DESTRUCTIVE OPERATION\nDestroying environment: dev\nConfiguration: \n/home/runner/work/aws-api-factory/aws-api-factory/starter/factory.yaml\n\n[1/4] Loading configuration...\n✓ Configuration loaded\n[2/4] Checking AWS credentials...\n✗ Error: AWS credentials not configured\n  Suggestion: Configure AWS credentials using 'aws configure' or set \nAWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables.\n" = <Result SystemExit(5)>.output
-=================== 1 failed, 412 passed in 75.72s (0:01:15) ===================
-Error: Process completed with exit code 1.
+[main]  INFO    profile include tests: None
+[main]  INFO    profile exclude tests: B101
+[main]  INFO    cli include tests: None
+[main]  INFO    cli exclude tests: None
+[main]  INFO    using config: pyproject.toml
+[main]  INFO    running on Python 3.13.1
+[manager]       WARNING Test in comment: intentional is not a test name or id, ignoring
+[manager]       WARNING Test in comment: use is not a test name or id, ignoring
+[manager]       WARNING Test in comment: for is not a test name or id, ignoring
+[manager]       WARNING Test in comment: git is not a test name or id, ignoring
+[manager]       WARNING Test in comment: pre is not a test name or id, ignoring
+[manager]       WARNING Test in comment: commit is not a test name or id, ignoring
+[manager]       WARNING Test in comment: commands is not a test name or id, ignoring
+[manager]       WARNING Test in comment: trusted is not a test name or id, ignoring
+[manager]       WARNING Test in comment: git is not a test name or id, ignoring
+[manager]       WARNING Test in comment: command is not a test name or id, ignoring
+[manager]       WARNING Test in comment: trusted is not a test name or id, ignoring
+[manager]       WARNING Test in comment: pre is not a test name or id, ignoring
+[manager]       WARNING Test in comment: commit is not a test name or id, ignoring
+[manager]       WARNING Test in comment: command is not a test name or id, ignoring
+[manager]       WARNING Test in comment: intentional is not a test name or id, ignoring
+[manager]       WARNING Test in comment: use is not a test name or id, ignoring
+[manager]       WARNING Test in comment: for is not a test name or id, ignoring
+[manager]       WARNING Test in comment: CDK is not a test name or id, ignoring
+[manager]       WARNING Test in comment: subprocess is not a test name or id, ignoring
+[manager]       WARNING Test in comment: execution is not a test name or id, ignoring
+[manager]       WARNING Test in comment: trusted is not a test name or id, ignoring
+[manager]       WARNING Test in comment: CDK is not a test name or id, ignoring
+[manager]       WARNING Test in comment: command is not a test name or id, ignoring
+[manager]       WARNING Test in comment: trusted is not a test name or id, ignoring
+[manager]       WARNING Test in comment: CDK is not a test name or id, ignoring
+[manager]       WARNING Test in comment: command is not a test name or id, ignoring
+Run started:2026-01-11 18:22:52.837002
+
+Test results:
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/0.0.0/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./starter/src/services/public_api/app.py:373:13
+372             "app:app",
+373             host="0.0.0.0",
+374             port=int(os.getenv("PORT", "8000")),
+
+--------------------------------------------------
+
+Code scanned:
+        Total lines of code: 8495
+        Total lines skipped (#nosec): 0
+
+Run metrics:
+        Total issues (by severity):
+                Undefined: 0
+                Low: 0
+                Medium: 1
+                High: 0
+        Total issues (by confidence):
+                Undefined: 0
+                Low: 0
+                Medium: 1
+                High: 0
+Files skipped (0):
+
+Detect secrets...........................................................Passed
+yamllint.................................................................Passed
