@@ -105,9 +105,13 @@ pytest
 ## 📖 Documentation
 
 - [Getting Started Guide](docs/getting-started.md) — Deploy your first API in 15 minutes
-- [Configuration Reference](docs/configuration.md) — All `factory.yaml` options
-- [Architecture Overview](docs/architecture.md) — How AWS API Factory works
-- [Examples](examples/) — Sample projects and patterns
+- [Configuration Reference](docs/reference/configuration.md) — All `factory.yaml` options
+- [REST API Guide](docs/guides/rest-api.md) — API Gateway and routing
+- [Lambda Functions Guide](docs/guides/lambda-functions.md) — Handler patterns
+- [App Runner Guide](docs/guides/app-runner-containers.md) — Container deployments
+- [Authentication Guide](docs/guides/authentication.md) — API Keys, IAM, Cognito
+- [CRUD API Example](docs/examples/crud-api.md) — Complete working example
+- [Troubleshooting](docs/troubleshooting.md) — Common issues and solutions
 
 ## 🏗️ Project Structure
 
@@ -125,7 +129,7 @@ aws-api-factory/
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## 📄 License
 

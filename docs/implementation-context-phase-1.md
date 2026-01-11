@@ -642,3 +642,83 @@ python -c "from aws_api_factory.utils import extract_auth_context, require_auth;
 ```
 
 ---
+
+## Component 1.9: Starter Template and Documentation
+
+**Status:** ✅ Complete
+
+**Implementation Date:** January 8, 2026
+
+---
+
+### Overview
+
+Completed the starter template with comprehensive examples (hello + orders CRUD services, App Runner FastAPI) and full documentation suite. Documentation includes getting-started guide, configuration reference, guides for each compute/auth pattern, troubleshooting, and examples.
+
+### Files Created/Updated
+
+| File | Purpose |
+|------|---------|
+| `starter/factory.yaml` | Complete config template with all sections, profiles, routes |
+| `starter/src/services/orders/handler.py` | CRUD API Lambda handler with validation |
+| `starter/README.md` | Project-specific quick start and structure guide |
+| `docs/getting-started.md` | 15-minute install-to-deploy tutorial |
+| `docs/reference/configuration.md` | Complete factory.yaml reference (~400 lines) |
+| `docs/guides/rest-api.md` | API Gateway routing, CORS, request/response |
+| `docs/guides/lambda-functions.md` | Handler patterns, middleware, logging |
+| `docs/guides/app-runner-containers.md` | Container deployment, Dockerfile, FastAPI |
+| `docs/guides/authentication.md` | API Key/IAM/Cognito with decision tree |
+| `docs/examples/crud-api.md` | Complete CRUD walkthrough with tests |
+| `docs/troubleshooting.md` | Common issues: CLI, config, deploy, runtime |
+| `tests/test_starter_template.py` | 44 tests for template/docs validation |
+
+### Starter Template Structure
+
+```
+starter/
+├── factory.yaml              # Full config with minimal/scalable profiles
+├── README.md                 # Project quick start
+├── infra/app.py             # CDK entry point
+└── src/services/
+    ├── hello/handler.py     # Simple Lambda example
+    ├── orders/handler.py    # CRUD Lambda with validation
+    └── public_api/          # App Runner FastAPI service
+        ├── app.py
+        ├── Dockerfile
+        └── requirements.txt
+```
+
+### Documentation Coverage
+
+| Category | Files | Key Topics |
+|----------|-------|------------|
+| Getting Started | 1 | Prerequisites, install, first deploy, test endpoints |
+| Reference | 2 | Configuration schema, defaults by profile |
+| Guides | 5 | REST API, Lambda, App Runner, Auth, Construct Dev |
+| Examples | 1 | Complete CRUD API implementation |
+| Troubleshooting | 1 | 25+ common issues with solutions |
+
+### Test Coverage
+
+- **44 new tests** for starter template and documentation
+- **599 total tests** passing (all Phase 1 components)
+- **82.86% overall coverage** (exceeds threshold)
+- Tests verify: file existence, YAML/Python syntax, config validation, doc content
+
+### Verification Commands
+
+```bash
+# Run starter template tests
+pytest tests/test_starter_template.py -v
+
+# Verify starter config validates
+factory validate starter/factory.yaml
+
+# Verify documentation exists
+ls -la docs/getting-started.md docs/guides/*.md docs/reference/*.md
+
+# Run full test suite
+pytest
+```
+
+---
