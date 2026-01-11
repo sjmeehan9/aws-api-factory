@@ -550,3 +550,95 @@ python -c "from aws_api_factory.constructs import AppRunnerConstruct; print('OK'
 ```
 
 ---
+
+## Component 1.8: Authentication Module (API Keys, IAM, Cognito)
+
+**Status:** ✅ Complete
+
+**Implementation Date:** January 2025
+
+---
+
+### Overview
+
+Implemented a comprehensive authentication module supporting three authentication modes for API Gateway REST APIs: API Key authentication with usage plans and rate limiting, IAM authentication with SigV4 signing for service-to-service calls, and Cognito JWT authorization with User Pools for user-facing applications. Each mode integrates with the RestApiConstruct to apply per-route authentication based on factory.yaml configuration.
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `src/aws_api_factory/constructs/auth/__init__.py` | Module exports for all auth constructs |
+| `src/aws_api_factory/constructs/auth/api_key.py` | ApiKeyAuthConstruct (~280 lines) |
+| `src/aws_api_factory/constructs/auth/iam.py` | IamAuthConstruct (~300 lines) |
+| `src/aws_api_factory/constructs/auth/cognito.py` | CognitoAuthConstruct (~450 lines) |
+| `src/aws_api_factory/constructs/auth/helpers.py` | Helper functions (~400 lines) |
+| `src/aws_api_factory/utils/auth.py` | Lambda auth utilities (~450 lines) |
+| `starter/src/services/hello/auth_handler.py` | Example authenticated handler |
+| `tests/constructs/test_auth.py` | Auth construct unit tests (28 tests) |
+| `tests/integration/test_auth_e2e.py` | Integration tests (8 tests) |
+| `tests/utils/test_auth.py` | Auth utilities tests (37 tests) |
+
+### Key Classes
+
+| Class | Purpose |
+|-------|---------|
+| `ApiKeyAuthConstruct` | Creates API key, usage plan with quotas and rate limits |
+| `IamAuthConstruct` | Creates managed policy for execute-api:Invoke |
+| `CognitoAuthConstruct` | Creates User Pool, Client, and Cognito Authorizer |
+| `AuthConstructs` | Dataclass container for auth construct instances |
+| `AuthContext` | Dataclass for extracted auth info in Lambda handlers |
+| `AuthType` | Enum for auth type detection (NONE, API_KEY, IAM, COGNITO) |
+
+### Key Functions
+
+| Function | Purpose |
+|----------|---------|
+| `create_auth_constructs()` | Creates only the auth constructs needed by routes |
+| `apply_auth_to_method()` | Applies auth settings to an API Gateway method |
+| `get_method_options()` | Returns method options dict for auth mode |
+| `validate_auth_config()` | Validates auth configuration consistency |
+| `extract_auth_context()` | Extracts auth info from Lambda event |
+| `@require_auth()` | Decorator for requiring authentication |
+| `@require_cognito_auth()` | Decorator for Cognito-only routes |
+
+### Profile Differences
+
+| Feature | Minimal | Scalable |
+|---------|---------|----------|
+| API Key Daily Quota | 1,000 | 10,000 |
+| Rate Limit | 10 req/s | 100 req/s |
+| Burst Limit | 20 | 200 |
+| Password Length | 8 chars | 12 chars |
+| Require Symbols | No | Yes |
+| MFA | Off | Optional |
+| Token Validity | 4 hours | 1 hour |
+| Removal Policy | DESTROY | RETAIN |
+
+### Auth Mode Selection Guide
+
+- **API Key**: Partner integrations, rate limiting, usage tracking
+- **IAM**: Service-to-service, internal microservices (SigV4)
+- **Cognito**: User-facing apps with registration/login flows
+
+### Test Coverage
+
+- **73 auth tests** passing (28 unit + 8 integration + 37 utils)
+- `auth/api_key.py`: 85% coverage
+- `auth/cognito.py`: 78% coverage
+- `auth/iam.py`: 81% coverage
+- `utils/auth.py`: 97% coverage
+
+### Verification Commands
+
+```bash
+# Run all auth tests
+pytest tests/constructs/test_auth.py tests/utils/test_auth.py tests/integration/test_auth_e2e.py -v
+
+# Verify imports work
+python -c "from aws_api_factory.constructs import ApiKeyAuthConstruct, CognitoAuthConstruct; print('OK')"
+
+# Verify utils imports
+python -c "from aws_api_factory.utils import extract_auth_context, require_auth; print('OK')"
+```
+
+---

@@ -32,6 +32,22 @@ Example:
 
 """
 
+# Import auth constructs
+from aws_api_factory.constructs.auth import (
+    ApiKeyAuthConstruct,
+    CognitoAuthConstruct,
+    IamAuthConstruct,
+    apply_auth_to_method,
+    create_auth_constructs,
+    get_auth_mode_for_route,
+    validate_auth_config,
+)
+from aws_api_factory.constructs.auth.helpers import (
+    AuthConstructs,
+    get_authorization_type,
+    get_method_options,
+    get_required_auth_modes,
+)
 from aws_api_factory.constructs.base import (
     BaseConstruct,
     apply_global_tags,
@@ -102,4 +118,16 @@ __all__ = [
     "create_catch_all_proxy",
     "create_http_integration",
     "create_http_proxy_integration",
+    # Auth constructs (Component 1.8)
+    "ApiKeyAuthConstruct",
+    "IamAuthConstruct",
+    "CognitoAuthConstruct",
+    "AuthConstructs",
+    "apply_auth_to_method",
+    "create_auth_constructs",
+    "get_auth_mode_for_route",
+    "get_required_auth_modes",
+    "get_authorization_type",
+    "get_method_options",
+    "validate_auth_config",
 ]
