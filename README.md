@@ -12,10 +12,10 @@
 - 🚀 **Config-Driven Deployment** — Define your API with a simple YAML file
 - 🔧 **Two Profiles** — Choose between `minimal` (cost-optimized) or `scalable` (production-ready)
 - 🌐 **REST APIs** — Amazon API Gateway with Lambda or App Runner backends
-- 📊 **GraphQL APIs** — AWS AppSync with Lambda and DynamoDB resolvers
-- 🔐 **Authentication** — API Keys, IAM, or Cognito out of the box
-- 📦 **Data Layer** — DynamoDB, S3, and Aurora Serverless v2 support
-- 🤖 **AI Assistant** — Optional LLM-powered adapter code generation
+- � **Authentication** — API Keys, IAM, or Cognito out of the box
+- 📊 **GraphQL APIs** — AWS AppSync with Lambda and DynamoDB resolvers *(Coming Soon)*
+- 📦 **Data Layer** — DynamoDB, S3, and Aurora Serverless v2 support *(Coming Soon)*
+- 🤖 **AI Assistant** — Optional LLM-powered adapter code generation *(Coming Soon)*
 
 ## 🚀 Quick Start
 
