@@ -78,8 +78,8 @@ That's it! Your REST API is now live on AWS. 🎉
 
 - **Python** 3.12 or higher
 - **AWS CDK CLI** (`npm install -g aws-cdk`)
-- **AWS Account** with credentials configured
-- **Docker** (for App Runner deployments)
+- **AWS Account** with credentials configured — See [AWS Setup Guide](docs/guides/aws-setup.md)
+- **Docker** (optional, for App Runner deployments)
 
 ## 🛠️ Development Setup
 
@@ -105,6 +105,7 @@ pytest
 ## 📖 Documentation
 
 - [Getting Started Guide](docs/getting-started.md) — Deploy your first API in 15 minutes
+- [AWS Setup Guide](docs/guides/aws-setup.md) — Configure AWS credentials and profiles
 - [Configuration Reference](docs/reference/configuration.md) — All `factory.yaml` options
 - [REST API Guide](docs/guides/rest-api.md) — API Gateway and routing
 - [Lambda Functions Guide](docs/guides/lambda-functions.md) — Handler patterns

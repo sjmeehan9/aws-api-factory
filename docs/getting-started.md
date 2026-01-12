@@ -11,6 +11,8 @@ Before you begin, ensure you have:
 - **AWS CDK CLI** — Install with `npm install -g aws-cdk`
 - **Docker** (optional, for App Runner) — [Install Docker](https://docs.docker.com/get-docker/)
 
+> **New to AWS?** See our [AWS Setup Guide](guides/aws-setup.md) for detailed instructions on creating an AWS account, configuring credentials, and setting up named profiles.
+
 ### Verify Prerequisites
 
 ```bash
@@ -326,18 +328,20 @@ npm install -g aws-cdk
 
 ### "No credentials" Error
 
-Configure AWS credentials:
+Your AWS credentials are not configured. See the [AWS Setup Guide](guides/aws-setup.md) for detailed instructions.
+
+Quick fix:
 
 ```bash
+# Configure default credentials
 aws configure
-```
 
-Or set environment variables:
+# Or use a named profile
+aws configure --profile api-factory
+export AWS_PROFILE=api-factory
 
-```bash
-export AWS_ACCESS_KEY_ID=your-key
-export AWS_SECRET_ACCESS_KEY=your-secret
-export AWS_DEFAULT_REGION=us-east-1
+# Or pass profile directly to commands
+factory deploy dev --profile api-factory
 ```
 
 ### Deployment Timeout

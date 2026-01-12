@@ -27,11 +27,24 @@ my-api/
 ### Prerequisites
 
 - **Python 3.12+**
-- **AWS CLI** configured with credentials
+- **AWS CLI** configured with credentials — See [AWS Setup Guide](https://github.com/seanmeehan/aws-api-factory/blob/main/docs/guides/aws-setup.md)
 - **AWS CDK CLI** (`npm install -g aws-cdk`)
-- **Docker** (for App Runner deployments)
+- **Docker** (optional, for App Runner deployments)
 
-### 1. Validate Configuration
+### 1. Set Up Your Environment
+
+```bash
+# Activate the virtual environment
+source .venv/bin/activate
+
+# Install dependencies (including aws-api-factory)
+pip install -e .
+
+# Note: If aws-api-factory is not yet on PyPI, install it first:
+# pip install -e /path/to/aws-api-factory
+```
+
+### 2. Validate Configuration
 
 ```bash
 factory validate
@@ -39,7 +52,7 @@ factory validate
 
 This checks your `factory.yaml` for errors and shows what resources will be created.
 
-### 2. Deploy to AWS
+### 3. Deploy to AWS
 
 ```bash
 # Deploy to dev environment
@@ -47,9 +60,12 @@ factory deploy dev
 
 # Deploy to production
 factory deploy prod
+
+# Deploy with a specific AWS profile
+factory deploy dev --profile my-aws-profile
 ```
 
-### 3. Test Your API
+### 4. Test Your API
 
 After deployment, you'll see the API endpoint URL:
 
@@ -66,7 +82,7 @@ curl -X POST https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/orders \
      -d '{"customer_name": "John Doe", "items": [{"name": "Widget", "quantity": 2}]}'
 ```
 
-### 4. Clean Up
+### 5. Clean Up
 
 ```bash
 factory destroy dev

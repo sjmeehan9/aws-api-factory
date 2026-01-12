@@ -1,0 +1,17 @@
+{
+  "my-api-dev": {
+    "ApisRestlambdaRestApiEndpoint78869881": "https://v2dldhnuzi.execute-api.ap-southeast-2.amazonaws.com/dev/",
+    "MetadataEnvironment": "dev",
+    "MetadataProfile": "minimal",
+    "GeneralRestApiEndpoint": "https://v2dldhnuzi.execute-api.ap-southeast-2.amazonaws.com/dev/",
+    "GeneralRestApiStageName": "dev",
+    "MetadataProjectName": "my-api",
+    "GeneralLambdaHelloArn": "arn:aws:lambda:ap-southeast-2:097679145362:function:my-api-dev-lambda-hello",
+    "GeneralLambdaOrdersArn": "arn:aws:lambda:ap-southeast-2:097679145362:function:my-api-dev-lambda-orders",
+    "GeneralLambdaOrdersName": "my-api-dev-lambda-orders",
+    "GeneralRestApiId": "v2dldhnuzi",
+    "GeneralLambdaHelloName": "my-api-dev-lambda-hello",
+    "MetadataRegion": "ap-southeast-2",
+    "MetadataStackName": "my-api-dev"
+  }
+}

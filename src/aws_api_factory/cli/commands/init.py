@@ -492,18 +492,25 @@ def init(
     console.print("[bold]Next steps:[/bold]")
     console.print()
 
+    step_num = 1
     if not using_current_dir:
-        console.print(f"  1. cd {target_dir}")
-        console.print("  2. source .venv/bin/activate")
-        console.print("  3. pip install -e .")
-    else:
-        console.print("  1. source .venv/bin/activate")
-        console.print("  2. pip install -e .")
+        console.print(f"  {step_num}. cd {target_dir}")
+        step_num += 1
+
+    console.print(f"  {step_num}. source .venv/bin/activate")
+    step_num += 1
+    console.print(f"  {step_num}. pip install -e .")
+    step_num += 1
 
     console.print()
+    console.print(
+        "  [dim]Note: If aws-api-factory is not yet on PyPI, install it first:[/dim]"
+    )
+    console.print("  [dim]  pip install -e /path/to/aws-api-factory[/dim]")
+    console.print()
     console.print("  Then:")
-    console.print("  - Edit [path]factory.yaml[/path] to configure your API")
-    console.print("  - Add your services in [path]src/services/[/path]")
-    console.print("  - Run [command]factory validate[/command] to check configuration")
-    console.print("  - Run [command]factory deploy dev[/command] to deploy")
+    console.print("  - Edit [cyan]factory.yaml[/cyan] to configure your API")
+    console.print("  - Add your services in [cyan]src/services/[/cyan]")
+    console.print("  - Run [green]factory validate[/green] to check configuration")
+    console.print("  - Run [green]factory deploy dev[/green] to deploy")
     console.print()

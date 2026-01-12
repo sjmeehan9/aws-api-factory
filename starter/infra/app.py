@@ -71,8 +71,12 @@ def main() -> None:
         if account and region:
             cdk_env = Environment(account=account, region=region)
 
-        # Create the stack
-        stack_id = f"{resolved_config.project.name.replace('-', '').title()}{environment.capitalize()}Stack"
+        # Create the stack with consistent naming convention
+        # Format: {project}-{env}-stack (matches CLI's get_stack_name utility)
+        sanitized_name = (
+            resolved_config.project.name.lower().replace("_", "-").replace(" ", "-")
+        )
+        stack_id = f"{sanitized_name}-{environment}-stack"
 
         FactoryStack(
             app,

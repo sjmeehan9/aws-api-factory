@@ -144,6 +144,13 @@ app.synth()
     default=False,
     help="Only destroy resources in the stack, not dependencies.",
 )
+@click.option(
+    "--profile",
+    "-p",
+    type=str,
+    default=None,
+    help="AWS profile to use for destroy (from ~/.aws/credentials).",
+)
 @click.pass_context
 def destroy(
     ctx: click.Context,
@@ -151,6 +158,7 @@ def destroy(
     config: str,
     force: bool,
     exclusively: bool,
+    profile: str | None,
 ) -> None:
     """Destroy the API Factory stack.
 
@@ -179,6 +187,8 @@ def destroy(
     error_console.print("[error]⚠ DESTRUCTIVE OPERATION[/error]")
     console.print(f"[bold]Destroying environment:[/bold] [error]{environment}[/error]")
     console.print(f"[bold]Configuration:[/bold] [path]{config}[/path]")
+    if profile:
+        console.print(f"[bold]AWS Profile:[/bold] [cyan]{profile}[/cyan]")
     console.print()
 
     total_steps = 4
@@ -310,6 +320,7 @@ def destroy(
             cwd=cdk_working_dir,
             capture_output=True,
             show_progress=True,
+            profile=profile,
         )
 
         if result.stdout:

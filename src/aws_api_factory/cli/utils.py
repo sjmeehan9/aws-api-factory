@@ -429,6 +429,7 @@ def run_cdk_command(
     env: str | None = None,
     capture_output: bool = False,
     show_progress: bool = True,
+    profile: str | None = None,
 ) -> subprocess.CompletedProcess[str]:
     """Run a CDK command with error handling.
 
@@ -438,6 +439,7 @@ def run_cdk_command(
         env: Environment name to pass as context.
         capture_output: Whether to capture and return output.
         show_progress: Whether to show a progress spinner.
+        profile: AWS profile name to use for credentials.
 
     Returns:
         CompletedProcess result.
@@ -454,6 +456,10 @@ def run_cdk_command(
     # Add environment context if specified
     if env:
         cmd.extend(["--context", f"env={env}"])
+
+    # Add AWS profile if specified
+    if profile:
+        cmd.extend(["--profile", profile])
 
     # Set up environment variables
     cmd_env = os.environ.copy()

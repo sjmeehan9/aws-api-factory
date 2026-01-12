@@ -167,6 +167,13 @@ app.synth()
     default=False,
     help="Suppress progress output.",
 )
+@click.option(
+    "--profile",
+    "-p",
+    type=str,
+    default=None,
+    help="AWS profile to use for synthesis (from ~/.aws/credentials).",
+)
 @click.pass_context
 def synth(
     ctx: click.Context,
@@ -175,6 +182,7 @@ def synth(
     output: str,
     show: bool,
     quiet: bool,
+    profile: str | None,
 ) -> None:
     """Synthesize CloudFormation templates.
 
@@ -287,6 +295,7 @@ def synth(
             cwd=cdk_working_dir,
             capture_output=True,
             show_progress=not quiet,
+            profile=profile,
         )
 
         if verbose and not quiet and result.stdout:

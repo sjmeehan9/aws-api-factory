@@ -228,6 +228,13 @@ def parse_cdk_outputs(output: str) -> dict[str, str]:
     default=False,
     help="Skip confirmation prompts.",
 )
+@click.option(
+    "--profile",
+    "-p",
+    type=str,
+    default=None,
+    help="AWS profile to use for deployment (from ~/.aws/credentials).",
+)
 @click.pass_context
 def deploy(
     ctx: click.Context,
@@ -238,6 +245,7 @@ def deploy(
     outputs_file: str | None,
     no_rollback: bool,
     force: bool,
+    profile: str | None,
 ) -> None:
     """Deploy the API Factory stack to AWS.
 
@@ -259,6 +267,8 @@ def deploy(
     console.print()
     console.print(f"[bold]Deploying to AWS:[/bold] [cyan]{environment}[/cyan]")
     console.print(f"[bold]Configuration:[/bold] [path]{config}[/path]")
+    if profile:
+        console.print(f"[bold]AWS Profile:[/bold] [cyan]{profile}[/cyan]")
     if dry_run:
         console.print("[warning]DRY RUN MODE - no changes will be made[/warning]")
     console.print()
@@ -299,14 +309,15 @@ def deploy(
     print_step(current_step, total_steps, "Checking AWS credentials...")
 
     if not check_aws_credentials():
-        print_warning("AWS credentials may not be configured")
-        if not force:
-            if not confirm_action(
-                "AWS credentials appear to be missing. Continue anyway?"
-            ):
-                raise SystemExit(1)
-    else:
-        print_success("AWS credentials available")
+        print_error(
+            "AWS credentials not found or not configured",
+            suggestion="Configure AWS credentials using 'aws configure', "
+            "set AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY environment variables, "
+            "or specify a profile with --profile.",
+        )
+        raise SystemExit(5)
+
+    print_success("AWS credentials available")
 
     # Step 3: Check CDK
     current_step += 1
@@ -389,6 +400,7 @@ def deploy(
             cwd=cdk_working_dir,
             capture_output=True,
             show_progress=True,
+            profile=profile,
         )
 
         if result.stdout:
