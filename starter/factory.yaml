@@ -1,0 +1,236 @@
+# AWS API Factory - Configuration File
+# SPDX-License-Identifier: MIT
+#
+# This configuration file defines your API infrastructure.
+# Edit this file to customize your deployment.
+#
+# Documentation: https://github.com/seanmeehan/aws-api-factory/blob/main/docs/reference/configuration.md
+# ─────────────────────────────────────────────────────────────────────────────
+
+# =============================================================================
+# PROJECT CONFIGURATION
+# =============================================================================
+# Basic project metadata used for resource naming and tagging.
+
+project:
+  # Project name - used for resource naming (lowercase, alphanumeric with hyphens)
+  name: my-api
+
+  # Environments to deploy (e.g., dev, staging, prod)
+  # Deploy with: factory deploy <env>
+  envs:
+    - dev
+    - prod
+
+# =============================================================================
+# DEPLOYMENT PROFILE
+# =============================================================================
+# Choose your deployment profile:
+#
+#   minimal   - Lower cost, simpler setup, good for development and small workloads
+#               * Basic logging and metrics
+#               * Pay-per-use compute (no reserved capacity)
+#               * Standard security defaults
+#
+#   scalable  - Production-ready with higher resilience and observability
+#               * Enhanced logging, tracing, and alarms
+#               * Reserved/provisioned concurrency
+#               * Stronger throttling and rate limiting
+#
+# See docs/reference/defaults.md for full comparison
+
+profile: minimal
+
+# =============================================================================
+# API CONFIGURATION
+# =============================================================================
+# Define your REST and GraphQL APIs.
+
+apis:
+  # REST API (Amazon API Gateway)
+  rest:
+    enabled: true
+
+    # CORS configuration (optional)
+    # cors:
+    #   allow_origins:
+    #     - "*"                    # Or specific origins: ["https://example.com"]
+    #   allow_methods:
+    #     - GET
+    #     - POST
+    #     - PUT
+    #     - DELETE
+    #   allow_headers:
+    #     - Content-Type
+    #     - Authorization
+
+    # Define your API routes
+    routes:
+      # Simple hello endpoint (no authentication)
+      - path: /hello
+        methods:
+          - GET
+        service: hello
+        auth: none
+
+      # Orders CRUD endpoints (demonstrates multiple methods)
+      - path: /orders
+        methods:
+          - GET
+          - POST
+        service: orders
+        auth: none
+
+      - path: /orders/{id}
+        methods:
+          - GET
+          - PUT
+          - DELETE
+        service: orders
+        auth: none
+
+      # Example: API Key protected endpoint
+      # - path: /secure
+      #   methods:
+      #     - GET
+      #   service: hello
+      #   auth: api_key
+
+      # Example: Cognito JWT protected endpoint
+      # - path: /users/me
+      #   methods:
+      #     - GET
+      #   service: users
+      #   auth: cognito
+
+  # GraphQL API (AWS AppSync) - Phase 2 feature
+  graphql:
+    enabled: false
+    # schema_path: src/graphql/schema.graphql
+    # auth: api_key  # or cognito, iam
+    # resolvers:
+    #   - type: Query
+    #     field: getOrder
+    #     service: orders
+    #     resolver: get_order
+
+# =============================================================================
+# COMPUTE CONFIGURATION
+# =============================================================================
+# Configure Lambda functions and App Runner services.
+
+compute:
+  # AWS Lambda Functions
+  lambda:
+    enabled: true
+
+    # Define your Lambda services
+    # Each service maps to a handler function
+    services:
+      # Hello World service
+      hello:
+        # Entry point: path/to/file.py:handler_function
+        entry: src/services/hello/handler.py:handler
+
+        # Memory and timeout (use 'auto' for profile defaults)
+        memory_mb: auto
+        timeout_s: auto
+
+        # Optional: Environment variables
+        # environment:
+        #   LOG_LEVEL: INFO
+        #   API_VERSION: v1
+
+        # Optional: Reserved concurrency (scalable profile)
+        # reserved_concurrency: 10
+
+      # Orders CRUD service
+      orders:
+        entry: src/services/orders/handler.py:handler
+        memory_mb: auto
+        timeout_s: auto
+
+  # AWS App Runner (Containers)
+  apprunner:
+    enabled: false
+
+    # Define your container services
+    services:
+      public_api:
+        dockerfile: src/services/public_api/Dockerfile
+        port: 8000
+        healthcheck_path: /healthz
+
+        # Optional: CPU and memory (vCPU and GB)
+        # cpu: 1
+        # memory: 2
+
+        # Optional: Auto-scaling configuration
+        # min_instances: 1
+        # max_instances: 10
+
+# =============================================================================
+# DATA CONFIGURATION
+# =============================================================================
+# Configure data stores (DynamoDB, S3, Aurora).
+# Note: Some features are Phase 2
+
+data:
+  # Amazon DynamoDB
+  dynamodb:
+    enabled: false
+    # tables:
+    #   - name: orders
+    #     pk: order_id
+    #     sk: created_at
+    #     # billing_mode: PAY_PER_REQUEST
+    #     # pitr: true
+
+  # Amazon S3
+  s3:
+    enabled: false
+    # buckets:
+    #   - name: uploads
+    #     versioning: true
+    #     cors: true
+
+  # Amazon Aurora Serverless v2 - Phase 2 feature
+  aurora:
+    enabled: false
+    # engine: postgres
+    # mode: serverless_v2
+    # min_acu: 0.5
+    # max_acu: 8
+
+# =============================================================================
+# SECRETS CONFIGURATION
+# =============================================================================
+# Configure secrets management for your application.
+
+secrets:
+  # Secrets provider: ssm (Parameter Store) or secrets_manager
+  provider: ssm
+
+  # Cognito configuration (for auth: cognito)
+  # cognito:
+  #   user_pool_id: us-east-1_XXXXXXXXX
+  #   app_client_id: xxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# =============================================================================
+# OBSERVABILITY CONFIGURATION
+# =============================================================================
+# Configure logging, metrics, and tracing.
+
+observability:
+  # Observability level: basic or enhanced
+  #
+  #   basic    - CloudWatch logs, standard metrics
+  #   enhanced - Structured logging, X-Ray tracing, alarms, dashboards
+
+  level: basic
+
+  # Optional: Custom log retention (days)
+  # log_retention_days: 30
+
+  # Optional: Enable X-Ray tracing (auto-enabled in scalable profile)
+  # tracing: true

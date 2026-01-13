@@ -1,0 +1,26 @@
+# AWS API Factory - Invalid Configuration: Bad Service Reference
+# Used for testing validation of service references in routes
+
+project:
+  name: my-api
+  envs:
+    - dev
+
+profile: minimal
+
+apis:
+  rest:
+    enabled: true
+    routes:
+      - path: /hello
+        methods:
+          - GET
+        service: nonexistent-service  # Service not defined in compute
+        auth: none
+
+compute:
+  lambda:
+    enabled: true
+    services:
+      hello:  # Different name than referenced in route
+        entry: src/services/hello/handler.py:handler

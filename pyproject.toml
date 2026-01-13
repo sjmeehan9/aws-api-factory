@@ -1,0 +1,181 @@
+# AWS API Factory - Python Packaging Configuration
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Sean Meehan
+
+[build-system]
+requires = ["hatchling>=1.21.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aws-api-factory"
+version = "0.1.0"
+description = "Config-driven AWS CDK factory for deploying production-ready REST and GraphQL APIs"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+authors = [
+    { name = "Sean Meehan" }
+]
+keywords = [
+    "aws",
+    "cdk",
+    "api",
+    "rest",
+    "graphql",
+    "lambda",
+    "appsync",
+    "api-gateway",
+    "infrastructure-as-code",
+    "serverless"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Typing :: Typed",
+]
+
+dependencies = [
+    "aws-cdk-lib>=2.100.0",
+    "constructs>=10.0.0",
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0",
+    "click>=8.0.0",
+    "rich>=13.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-mock>=3.10.0",
+    "black>=23.0.0",
+    "mypy>=1.0.0",
+    "bandit>=1.7.0",
+    "pre-commit>=3.0.0",
+    "detect-secrets>=1.4.0",
+    "types-PyYAML>=6.0.0",
+]
+
+llm = [
+    "openai>=1.0.0",
+]
+
+all = [
+    "aws-api-factory[dev,llm]",
+]
+
+[project.scripts]
+factory = "aws_api_factory.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/seanmeehan/aws-api-factory"
+Documentation = "https://github.com/seanmeehan/aws-api-factory#readme"
+Repository = "https://github.com/seanmeehan/aws-api-factory.git"
+Issues = "https://github.com/seanmeehan/aws-api-factory/issues"
+Changelog = "https://github.com/seanmeehan/aws-api-factory/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aws_api_factory"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/starter",
+    "/LICENSE",
+    "/README.md",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--tb=short",
+    "--cov=src/aws_api_factory",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+    "--cov-fail-under=50",
+]
+markers = [
+    "unit: Unit tests (fast, no external dependencies)",
+    "integration: Integration tests (may require AWS credentials)",
+    "e2e: End-to-end tests (require full AWS deployment)",
+]
+
+[tool.coverage.run]
+source = ["src/aws_api_factory"]
+branch = true
+omit = [
+    "*/__pycache__/*",
+    "*/tests/*",
+    # Placeholder modules to be implemented in later phases
+    "src/aws_api_factory/constructs/__init__.py",
+    "src/aws_api_factory/templates/__init__.py",
+    "src/aws_api_factory/utils/__init__.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    \.eggs
+    | \.git
+    | \.hatch
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | cdk\.out
+)/
+'''
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+follow_imports = "silent"
+ignore_missing_imports = false
+
+[[tool.mypy.overrides]]
+module = [
+    "aws_cdk.*",
+    "constructs.*",
+]
+ignore_missing_imports = true
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv", "cdk.out"]
+skips = ["B101"]  # Allow assert statements in tests
