@@ -38,7 +38,7 @@ jobs:
       - name: Run pre-commit hooks
         run: pre-commit run --all-files --show-diff-on-failure
         env:
-          SKIP: detect-secrets,mypy
+          SKIP: detect-secrets,mypy,no-commit-to-branch
 
   type-check:
     name: Type Check (mypy)
