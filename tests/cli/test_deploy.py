@@ -230,19 +230,23 @@ class TestDeployCommand:
     ) -> None:
         """Test deploy fails gracefully when CDK is not installed."""
         with patch("shutil.which", return_value=None):
-            result = cli_runner.invoke(
-                cli,
-                [
-                    "deploy",
-                    "dev",
-                    "--config",
-                    str(starter_dir / "factory.yaml"),
-                    "--force",
-                ],
-            )
+            with patch(
+                "aws_api_factory.cli.commands.deploy.check_aws_credentials"
+            ) as mock_creds:
+                mock_creds.return_value = True
+                result = cli_runner.invoke(
+                    cli,
+                    [
+                        "deploy",
+                        "dev",
+                        "--config",
+                        str(starter_dir / "factory.yaml"),
+                        "--force",
+                    ],
+                )
 
-            assert result.exit_code != 0
-            assert "CDK" in result.output
+                assert result.exit_code != 0
+                assert "CDK" in result.output
 
 
 class TestDeployCommandResourcesDisplay:
